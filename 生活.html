@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>生活 | 夺回注意力 - 微光纪实</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@100;300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'Noto Sans SC', sans-serif; background: #F5F5F0; color: #1A1A1A; overflow-x: hidden; width: 100%; }
+  
+  /* ========== 第1页：封面 ========== */
+  .cover-page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  .cover-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url('https://images.pexels.com/photos/8864018/pexels-photo-8864018.jpeg?w=1200') center/cover no-repeat;
+    z-index: 1;
+  }
+  
+  .cover-bg::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(93,122,104,0.75) 0%, rgba(70,95,80,0.65) 50%, rgba(50,70,60,0.55) 100%);
+  }
+  
+  /* 顶部刊名方框 */
+  .cover-header-box {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 12px 32px;
+    text-align: center;
+  }
+  
+  .cover-header-box::before,
+  .cover-header-box::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border: 1px solid rgba(255,255,255,0.5);
+  }
+  
+  .cover-header-box::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  .cover-header-box::after {
+    bottom: -1px;
+    right: -1px;
+    border-left: none;
+    border-top: none;
+  }
+  
+  .cover-header-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 6px;
+    line-height: 1;
+  }
+  
+  .cover-header-issue {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 10px;
+    font-weight: 100;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 3px;
+    margin-top: 6px;
+  }
+  
+  .cover-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 0 40px;
+    margin-top: 40px;
+  }
+  
+  .cover-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 8px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  
+  .cover-subtitle {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+    max-width: 320px;
+    letter-spacing: 1px;
+  }
+  
+  .cover-hint {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+    animation: breathe 2s ease-in-out infinite;
+  }
+  
+  @keyframes breathe {
+    0%, 100% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(-5px); }
+  }
+  
+  .cover-hint-text {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  
+  .cover-hint-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 1px solid rgba(255,255,255,0.4);
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    transform: rotate(45deg);
+    margin: 0 auto;
+  }
+  
+  /* ========== 第2页：LOGO动画 ========== */
+  .logo-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #0a1628;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    overflow: hidden;
+  }
+  
+  .logo-page.active {
+    opacity: 1;
+  }
+  
+  .logo-horizon {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(255,255,255,0.2) 15%, 
+      rgba(255,255,255,0.5) 50%, 
+      rgba(255,255,255,0.2) 85%, 
+      transparent 100%
+    );
+    top: 58%;
+    left: 0;
+    opacity: 0;
+    animation: horizonAppear 1s ease-out forwards;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2), 0 0 40px rgba(255,255,255,0.1);
+  }
+  
+  @keyframes horizonAppear {
+    0% { opacity: 0; transform: scaleX(0); }
+    100% { opacity: 1; transform: scaleX(1); }
+  }
+  
+  .logo-arrow-container {
+    position: relative;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .logo-arrow {
+    width: 4px;
+    height: 0;
+    background: linear-gradient(to top, 
+      rgba(255,255,255,1) 0%, 
+      rgba(255,255,255,0.9) 20%,
+      rgba(255,255,255,0.6) 50%,
+      rgba(255,255,255,0.2) 80%,
+      rgba(255,255,255,0.05) 100%
+    );
+    position: relative;
+    opacity: 0;
+    animation: arrowRise 1.5s ease-out 0.8s forwards;
+    box-shadow: 
+      0 0 15px rgba(255,255,255,0.6),
+      0 0 40px rgba(255,255,255,0.4),
+      0 0 80px rgba(255,255,255,0.2),
+      0 0 120px rgba(255,255,255,0.1);
+  }
+  
+  @keyframes arrowRise {
+    0% { height: 0; opacity: 0; }
+    15% { opacity: 1; }
+    100% { height: 120px; opacity: 1; }
+  }
+  
+  .logo-arrow::after {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 18px solid rgba(255,255,255,0.98);
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.9)) drop-shadow(0 0 40px rgba(255,255,255,0.5));
+  }
+  
+  .logo-arrow-glow {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 15px;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.5) 0%, transparent 70%);
+    opacity: 0;
+    animation: glowAppear 0.5s ease-out 0.6s forwards;
+  }
+  
+  @keyframes glowAppear {
+    0% { opacity: 0; transform: translateX(-50%) scale(0.5); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1); }
+  }
+  
+  .logo-beam {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 0;
+    background: linear-gradient(to top, 
+      rgba(255,255,255,0.25) 0%, 
+      rgba(255,255,255,0.08) 40%,
+      transparent 100%
+    );
+    opacity: 0;
+    animation: beamExpand 1.2s ease-out 1s forwards;
+    pointer-events: none;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+  
+  @keyframes beamExpand {
+    0% { height: 0; opacity: 0; }
+    100% { height: 180px; opacity: 1; }
+  }
+  
+  .logo-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 14px;
+    margin-top: 60px;
+    opacity: 0;
+    animation: textFadeIn 1.2s ease-out 2.2s forwards;
+    text-shadow: 
+      0 0 30px rgba(255,255,255,0.5), 
+      0 0 60px rgba(255,255,255,0.3),
+      0 0 120px rgba(255,255,255,0.15);
+  }
+  
+  @keyframes textFadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  .logo-glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 55%);
+    border-radius: 50%;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: glowPulse 4s ease-in-out infinite;
+  }
+  
+  @keyframes glowPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+    50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.6; }
+  }
+  
+  /* ========== 第3页：极简竖排目录 ========== */
+  .toc-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #F5F5F0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 30px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    position: relative;
+  }
+  
+  .toc-page.active {
+    opacity: 1;
+  }
+  
+  .minimal-toc {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    min-height: 380px;
+  }
+  
+  /* 左侧竖排大字 */
+  .minimal-toc-main {
+    flex-shrink: 0;
+    width: 90px;
+  }
+  
+  .minimal-toc-vertical {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 68px;
+    font-weight: 700;
+    color: #1A1A1A;
+    writing-mode: vertical-rl;
+    letter-spacing: 10px;
+    line-height: 1;
+  }
+  
+  .minimal-toc-vertical .c1 { 
+    display: inline-block;
+    transform: rotate(2deg); 
+  }
+  .minimal-toc-vertical .c2 { 
+    display: inline-block;
+    transform: rotate(-3deg); 
+    font-size: 0.9em;
+  }
+  .minimal-toc-vertical .c3 { 
+    display: inline-block;
+    transform: rotate(1deg); 
+  }
+  .minimal-toc-vertical .c4 { 
+    display: inline-block;
+    transform: rotate(-2deg); 
+    font-size: 1.05em;
+  }
+  .minimal-toc-vertical .c5 { 
+    display: inline-block;
+    transform: rotate(3deg); 
+  }
+  
+  /* 右侧信息区 */
+  .minimal-toc-side {
+    flex: 1;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 380px;
+  }
+  
+  .minimal-toc-label {
+    font-size: 10px;
+    font-weight: 100;
+    color: #5D7A68;
+    letter-spacing: 5px;
+    writing-mode: vertical-rl;
+    margin-bottom: 20px;
+  }
+  
+  .minimal-toc-kws {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .minimal-kw {
+    font-size: 14px;
+    font-weight: 300;
+    color: #5D7A68;
+    letter-spacing: 1px;
+    writing-mode: vertical-rl;
+    line-height: 1.3;
+    opacity: 0.7;
+  }
+  
+  .minimal-kw:nth-child(1) { font-size: 18px; opacity: 1; }
+  .minimal-kw:nth-child(2) { font-size: 12px; transform: rotate(-5deg); }
+  .minimal-kw:nth-child(3) { font-size: 16px; transform: rotate(3deg); }
+  .minimal-kw:nth-child(4) { font-size: 11px; transform: rotate(-2deg); }
+  
+  .minimal-toc-bottom {
+    margin-top: auto;
+    text-align: right;
+  }
+  
+  .minimal-toc-date {
+    font-size: 11px;
+    color: #ccc;
+    letter-spacing: 3px;
+    margin-bottom: 6px;
+  }
+  
+  .minimal-toc-issue {
+    font-size: 10px;
+    font-weight: 100;
+    color: #bbb;
+    letter-spacing: 2px;
+  }
+  
+  .minimal-toc-enter {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #5D7A68;
+    letter-spacing: 4px;
+    cursor: pointer;
+    animation: breathe 2s ease-in-out infinite;
+  }
+  
+  /* ========== 第4页：正文 ========== */
+  .content-page {
+    width: 100%;
+    background: #F5F5F0;
+    display: none;
+  }
+  
+  .layout-hero {
+    width: 100%;
+    height: 70vh;
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+  
+  .layout-hero-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url('https://images.pexels.com/photos/8864018/pexels-photo-8864018.jpeg?w=1200') center/cover no-repeat;
+    z-index: 1;
+  }
+  
+  .layout-hero-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(93,122,104,0.3) 0%, rgba(50,70,60,0.6) 100%);
+    z-index: 2;
+  }
+  
+  .layout-hero-content {
+    position: relative;
+    z-index: 10;
+    padding: 40px;
+    width: 100%;
+  }
+  
+  .layout-hero-label {
+    font-size: 11px;
+    font-weight: 100;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  
+  .layout-hero-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+  
+  .layout-hero-subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    max-width: 400px;
+  }
+  
+  .body-text {
+    font-size: 16px;
+    font-weight: 300;
+    color: #1A1A1A;
+    line-height: 1.75;
+    padding: 30px;
+    text-align: justify;
+  }
+  
+  .body-text strong {
+    font-weight: 500;
+    color: #5D7A68;
+  }
+  
+  .image-caption {
+    font-size: 10px;
+    color: #aaa;
+    text-align: center;
+    padding: 8px 0;
+    letter-spacing: 1px;
+  }
+  
+  .layout-image-text {
+    margin: 40px 0;
+  }
+  
+  .image-area {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+  
+  .image-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .text-area {
+    padding: 40px;
+    background: #5D7A68;
+  }
+  
+  .text-area-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+  
+  .text-area-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.8;
+  }
+  
+  .layout-quote-image {
+    margin: 40px 0;
+    position: relative;
+  }
+  
+  .layout-quote-image img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .layout-quote-text-box {
+    background: #5D7A68;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .layout-quote-text-box p {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 2;
+    letter-spacing: 1px;
+  }
+  
+  .layout-card-title {
+    padding: 40px 30px;
+  }
+  
+  .title-card {
+    border: 1px solid rgba(93,122,104,0.3);
+    padding: 30px;
+    position: relative;
+  }
+  
+  .title-card::before,
+  .title-card::after,
+  .title-card-main::before,
+  .title-card-main::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid rgba(93,122,104,0.4);
+  }
+  
+  .title-card::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  .title-card::after {
+    top: -1px;
+    right: -1px;
+    border-left: none;
+    border-bottom: none;
+  }
+  
+  .title-card-main::before {
+    bottom: -1px;
+    left: -1px;
+    border-right: none;
+    border-top: none;
+  }
+  
+  .title-card-main::after {
+    bottom: -1px;
+    right: -1px;
+    border-left: none;
+    border-top: none;
+  }
+  
+  .title-card-main {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #5D7A68;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  
+  .title-card-sub {
+    font-size: 11px;
+    color: #aaa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  
+  .layout-split {
+    display: flex;
+    min-height: 400px;
+    margin: 40px 0;
+  }
+  
+  .layout-split-text {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+  }
+  
+  .layout-split-label {
+    font-size: 11px;
+    color: #5D7A68;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  
+  .layout-split-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+  
+  .layout-split-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.8;
+  }
+  
+  .layout-split-image {
+    flex: 1;
+    min-height: 300px;
+    overflow: hidden;
+  }
+  
+  .layout-split-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .quote-block {
+    padding: 40px 30px;
+    position: relative;
+  }
+  
+  .quote-block-line {
+    width: 1px;
+    height: 60px;
+    background: rgba(93,122,104,0.3);
+    margin-bottom: 20px;
+  }
+  
+  .quote-block-text {
+    font-size: 16px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.8;
+    padding-left: 20px;
+    border-left: 1px solid rgba(93,122,104,0.25);
+  }
+  
+  .quote-block-text::before {
+    content: '§';
+    position: absolute;
+    left: 30px;
+    top: 35px;
+    font-size: 16px;
+    color: rgba(93,122,104,0.15);
+  }
+  
+  .layout-fullimage {
+    width: 100%;
+    height: 50vh;
+    min-height: 350px;
+    position: relative;
+    overflow: hidden;
+    margin: 40px 0;
+  }
+  
+  .layout-fullimage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .layout-fullimage-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(93,122,104,0.3) 0%, rgba(50,70,60,0.7) 100%);
+    z-index: 2;
+  }
+  
+  .layout-fullimage-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+    z-index: 10;
+  }
+  
+  .layout-fullimage-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 2px;
+  }
+  
+  .footer-section {
+    padding: 60px 30px;
+    text-align: center;
+    background: #F5F5F0;
+  }
+  
+  .footer-divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(0,0,0,0.15);
+    margin: 0 auto 30px;
+  }
+  
+  .footer-end {
+    font-size: 13px;
+    font-weight: 300;
+    color: #aaa;
+    letter-spacing: 6px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-logo {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #5D7A68;
+    letter-spacing: 4px;
+  }
+  
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    z-index: 100;
+  }
+  
+  .bottom-nav-item {
+    font-size: 11px;
+    color: #999;
+    text-decoration: none;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  
+  .bottom-nav-item.active {
+    color: #5D7A68;
+    font-weight: 500;
+  }
+  
+  @media (min-width: 700px) and (min-height: 1000px) {
+    .cover-title { font-size: 80px; }
+    .layout-hero-title { font-size: 48px; }
+    .layout-split { min-height: 500px; }
+    .body-text { font-size: 18px; padding: 40px 60px; }
+  }
+  
+  @media (max-width: 400px) {
+    .cover-title { font-size: 42px; }
+    .layout-hero-title { font-size: 26px; }
+    .layout-split { flex-direction: column; }
+    .layout-split-image { min-height: 280px; }
+    .body-text { font-size: 15px; padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 第1页：封面 -->
+<div class="cover-page" id="coverPage" onclick="enterMagazine()">
+  <div class="cover-bg"></div>
+  
+  <div class="cover-header-box">
+    <div class="cover-header-name">微光纪实</div>
+    <div class="cover-header-issue">2026年5月刊</div>
+  </div>
+  
+  <div class="cover-content">
+    <div class="cover-title">夺回注意力</div>
+    <div class="cover-subtitle">一场注定失败的抵抗</div>
+  </div>
+  
+  <div class="cover-hint">
+    <div class="cover-hint-text">点击进入</div>
+    <div class="cover-hint-arrow"></div>
+  </div>
+</div>
+
+<!-- 第2页：LOGO动画 -->
+<div class="logo-page" id="logoPage">
+  <div class="logo-glow"></div>
+  <div class="logo-horizon"></div>
+  <div class="logo-arrow-container">
+    <div class="logo-beam"></div>
+    <div class="logo-arrow">
+      <div class="logo-arrow-glow"></div>
+    </div>
+  </div>
+  <div class="logo-text">微光纪实</div>
+</div>
+
+<!-- 第3页：极简竖排目录 -->
+<div class="toc-page" id="tocPage">
+  <div class="minimal-toc">
+    <!-- 左侧竖排大字 -->
+    <div class="minimal-toc-main">
+      <div class="minimal-toc-vertical">
+        <span class="c1">夺</span><span class="c2">回</span><span class="c3">注</span><span class="c4">意</span><span class="c5">力</span>
+      </div>
+    </div>
+    
+    <!-- 右侧信息 -->
+    <div class="minimal-toc-side">
+      <div class="minimal-toc-label">栏目 04 · 生活</div>
+      
+      <div class="minimal-toc-kws">
+        <span class="minimal-kw">数字极简</span>
+        <span class="minimal-kw">焦虑抵抗</span>
+        <span class="minimal-kw">无聊能力</span>
+        <span class="minimal-kw">慢生活</span>
+      </div>
+      
+      <div class="minimal-toc-bottom">
+        <div class="minimal-toc-date">2026.05</div>
+        <div class="minimal-toc-issue">微光纪实</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="minimal-toc-enter" onclick="showArticle()">↓ 阅读全文</div>
+</div>
+
+<!-- 第4页：正文 -->
+<div class="content-page" id="contentPage">
+  
+  <!-- 开篇大图 -->
+  <div class="layout-hero">
+    <div class="layout-hero-bg"></div>
+    <div class="layout-hero-overlay"></div>
+    <div class="layout-hero-content">
+      <div class="layout-hero-label">栏目 04 · LIFE</div>
+      <div class="layout-hero-title">夺回注意力</div>
+      <div class="layout-hero-subtitle">一场注定失败的抵抗，但还是要抵抗</div>
+    </div>
+  </div>
+  
+  <!-- 人物故事开场 -->
+  <div class="body-text">
+    <strong>张薇今年30岁，自由职业者。她的抵抗是这样的：</strong>
+  </div>
+  
+  <div class="body-text">
+    每天早上8点，她把手机放在客厅，带着一本书和一杯咖啡走进卧室。没有手机，没有电脑，只有书和笔。前三天，她平均每5分钟就想站起来看手机。一周后，能安静阅读30分钟了。一个月后，她发现自己重新找回了"沉浸"的感觉——那种忘记时间、忘记外界、只和书中人物在一起的体验。
+  </div>
+  
+  <!-- 配图：咖啡与书 -->
+  <div class="layout-image-text">
+    <div class="image-area">
+      <img src="https://images.pexels.com/photos/34622244/pexels-photo-34622244.jpeg?w=900" alt="专注">
+    </div>
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="text-area" style="background: #5D7A68;">
+      <div class="text-area-title">"原来我可以不被手机控制。"</div>
+      <div class="text-area-body">
+        张薇的实验很简单：每天2小时无屏幕时间。不是完全不用手机，是给注意力划定边界。这个边界，就是她的"抵抗阵地"。
+      </div>
+    </div>
+  </div>
+  
+  <!-- 金句图片 -->
+  <div class="layout-quote-image">
+    <img src="https://images.pexels.com/photos/37247980/pexels-photo-37247980.jpeg?w=900" alt="自然">
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="layout-quote-text-box">
+      <p>抵抗的意义，<br>不在于胜利，而在于选择。</p>
+    </div>
+  </div>
+  
+  <!-- 小标题卡片 -->
+  <div class="layout-card-title">
+    <div class="title-card">
+      <div class="title-card-main">一、数字极简主义</div>
+      <div class="title-card-sub">Digital Minimalism</div>
+    </div>
+  </div>
+  
+  <!-- 正文 -->
+  <div class="body-text">
+    2026年，"数字极简主义"成为新的生活方式运动。核心原则很简单：只使用对你真正有价值的数字工具，其余全部砍掉。不是不用手机，是有意识地用。不是不看短视频，是只看你想看的，而不是算法推给你的。
+  </div>
+  
+  <div class="body-text">
+    张薇的实践更极端：她删除了所有社交APP，只保留了微信（工作需要）。手机变成了"通讯工具"，而不是"娱乐终端"。"刚开始很焦虑，"她说，"但一周后，我发现自己有了大块大块的时间。这些时间，我可以用来阅读、写作、发呆、或者什么都不做。"
+  </div>
+  
+  <!-- 配图：自然 -->
+  <div class="layout-split">
+    <div class="layout-split-text">
+      <div class="layout-split-label">01 / 观察</div>
+      <div class="layout-split-title">当"无聊"成为一种能力</div>
+      <div class="layout-split-body">
+        张薇发现，最难的不是不用手机，是面对"无聊"。以前，无聊就意味着拿起手机。现在，她学会了和无聊共处。"无聊是创造力的起点，"她说，"当你不再用碎片信息填满每一分钟，大脑就会自己找事做。"
+      </div>
+    </div>
+    <div class="layout-split-image">
+      <img src="https://images.pexels.com/photos/33821804/pexels-photo-33821804.jpeg?w=600" alt="自然">
+    </div>
+  </div>
+  <div class="image-caption">图 / Unsplash</div>
+  
+  <!-- 引用块 -->
+  <div class="quote-block">
+    <div class="quote-block-line"></div>
+    <div class="quote-block-text">
+      "夺回注意力的关键，不是对抗技术，是重建与真实世界的连接。当你开始感受阳光的温度、咖啡的香气、书页的触感，数字世界就失去了它的魔力。"
+    </div>
+  </div>
+  
+  <!-- 小标题卡片 -->
+  <div class="layout-card-title">
+    <div class="title-card">
+      <div class="title-card-main">二、注定失败的抵抗</div>
+      <div class="title-card-sub">A Losing Battle</div>
+    </div>
+  </div>
+  
+  <!-- 正文 -->
+  <div class="body-text">
+    但张薇也承认：这场抵抗注定失败。不是她不够坚定，是整个社会的设计就是让人分心的。工作的即时通讯、生活的在线支付、社交的微信群——数字工具已经渗透到每一个角落，不可能完全剥离。
+  </div>
+  
+  <div class="body-text">
+    "但我还是要抵抗，"她说，"不是为了赢，是为了不被完全吞没。就像在大海里游泳，你不可能战胜大海，但你可以学会换气、调整节奏、找到属于自己的浮力。"
+  </div>
+  
+  <!-- 配图：安静时刻 -->
+  <div class="layout-image-text">
+    <div class="image-area">
+      <img src="https://images.pexels.com/photos/9752058/pexels-photo-9752058.jpeg?w=900" alt="安静">
+    </div>
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="text-area" style="background: #5D7A68;">
+      <div class="text-area-title">"抵抗，是为了保留选择的权利。"</div>
+      <div class="text-area-body">
+        当算法替你决定今天读什么、看什么、买什么，你失去的不仅是注意力，是选择的自由。抵抗，就是夺回这份自由。
+      </div>
+    </div>
+  </div>
+  
+  <!-- 跨页大图 -->
+  <div class="layout-fullimage">
+    <img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1200&q=80" alt="日出">
+    <div class="layout-fullimage-overlay"></div>
+    <div class="layout-fullimage-bar">
+      <div class="layout-fullimage-text">夺回注意力，就是夺回生活的主动权</div>
+    </div>
+  </div>
+  <div class="image-caption">图 / Unsplash</div>
+  
+  <!-- 尾标 -->
+  <div class="footer-section">
+    <div class="footer-divider"></div>
+    <div class="footer-end">— END —</div>
+    <div class="footer-logo">微光纪实</div>
+    <div class="footer-divider" style="margin-top:30px;"></div>
+  </div>
+  
+</div>
+
+<!-- 底部导航 -->
+<div class="bottom-nav">
+  <a href="封面故事.html" class="bottom-nav-item">封面</a>
+  <a href="教育.html" class="bottom-nav-item">教育</a>
+  <a href="人文.html" class="bottom-nav-item">人文</a>
+  <a href="银发.html" class="bottom-nav-item">银发</a>
+  <a href="生活.html" class="bottom-nav-item active">生活</a>
+</div>
+
+<script>
+  function enterMagazine() {
+    const cover = document.getElementById('coverPage');
+    const logo = document.getElementById('logoPage');
+    const toc = document.getElementById('tocPage');
+    
+    cover.style.transition = 'opacity 0.5s ease';
+    cover.style.opacity = '0';
+    
+    setTimeout(() => {
+      cover.style.display = 'none';
+      
+      logo.style.display = 'flex';
+      setTimeout(() => logo.classList.add('active'), 50);
+      
+      setTimeout(() => {
+        logo.style.transition = 'opacity 0.5s ease';
+        logo.style.opacity = '0';
+        
+        setTimeout(() => {
+          logo.style.display = 'none';
+          
+          toc.style.display = 'flex';
+          setTimeout(() => toc.classList.add('active'), 50);
+          
+          toc.scrollIntoView({ behavior: 'smooth' });
+        }, 500);
+      }, 3000);
+    }, 500);
+  }
+  
+  function showArticle() {
+    const toc = document.getElementById('tocPage');
+    const content = document.getElementById('contentPage');
+    
+    if (toc.style.pointerEvents === 'none') return;
+    toc.style.pointerEvents = 'none';
+    
+    toc.style.transition = 'opacity 0.5s ease';
+    toc.style.opacity = '0';
+    
+    setTimeout(() => {
+      toc.style.display = 'none';
+      
+      content.style.display = 'block';
+      content.style.opacity = '0';
+      content.style.transition = 'opacity 0.8s ease';
+      
+      setTimeout(() => {
+        content.style.opacity = '1';
+        window.scrollTo({ top: content.offsetTop, behavior: 'smooth' });
+      }, 50);
+    }, 500);
+  }
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('logoPage').style.display = 'none';
+    document.getElementById('tocPage').style.display = 'none';
+    document.getElementById('contentPage').style.display = 'none';
+  });
+</script>
+
+</body>
+</html>

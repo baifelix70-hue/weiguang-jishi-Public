@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>封面故事 | 我们不是在退化，是在主动投降 - 微光纪实</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@100;300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'Noto Sans SC', sans-serif; background: #F5F5F0; color: #1A1A1A; overflow-x: hidden; width: 100%; }
+  
+  /* ========== 第1页：封面 ========== */
+  .cover-page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  .cover-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url('https://images.pexels.com/photos/34021104/pexels-photo-34021104.jpeg?w=1200') center/cover no-repeat;
+    z-index: 1;
+  }
+  
+  .cover-bg::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(26,26,46,0.7) 0%, rgba(22,33,62,0.6) 50%, rgba(15,52,96,0.5) 100%);
+  }
+  
+  /* 顶部刊名方框 */
+  .cover-header-box {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 12px 32px;
+    text-align: center;
+  }
+  
+  .cover-header-box::before,
+  .cover-header-box::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border: 1px solid rgba(255,255,255,0.5);
+  }
+  
+  .cover-header-box::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  .cover-header-box::after {
+    bottom: -1px;
+    right: -1px;
+    border-left: none;
+    border-top: none;
+  }
+  
+  .cover-header-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 6px;
+    line-height: 1;
+  }
+  
+  .cover-header-issue {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 10px;
+    font-weight: 100;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 3px;
+    margin-top: 6px;
+  }
+  
+  .cover-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 0 40px;
+    margin-top: 40px;
+  }
+  
+  .cover-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 6px;
+    line-height: 1.3;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  
+  .cover-subtitle {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+    max-width: 320px;
+    letter-spacing: 1px;
+  }
+  
+  .cover-hint {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+    animation: breathe 2s ease-in-out infinite;
+  }
+  
+  @keyframes breathe {
+    0%, 100% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(-5px); }
+  }
+  
+  .cover-hint-text {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  
+  .cover-hint-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 1px solid rgba(255,255,255,0.4);
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    transform: rotate(45deg);
+    margin: 0 auto;
+  }
+  
+  /* ========== 第2页：LOGO动画 ========== */
+  .logo-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #0a1628;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    overflow: hidden;
+  }
+  
+  .logo-page.active {
+    opacity: 1;
+  }
+  
+  .logo-horizon {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(255,255,255,0.2) 15%, 
+      rgba(255,255,255,0.5) 50%, 
+      rgba(255,255,255,0.2) 85%, 
+      transparent 100%
+    );
+    top: 58%;
+    left: 0;
+    opacity: 0;
+    animation: horizonAppear 1s ease-out forwards;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2), 0 0 40px rgba(255,255,255,0.1);
+  }
+  
+  @keyframes horizonAppear {
+    0% { opacity: 0; transform: scaleX(0); }
+    100% { opacity: 1; transform: scaleX(1); }
+  }
+  
+  .logo-arrow-container {
+    position: relative;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .logo-arrow {
+    width: 4px;
+    height: 0;
+    background: linear-gradient(to top, 
+      rgba(255,255,255,1) 0%, 
+      rgba(255,255,255,0.9) 20%,
+      rgba(255,255,255,0.6) 50%,
+      rgba(255,255,255,0.2) 80%,
+      rgba(255,255,255,0.05) 100%
+    );
+    position: relative;
+    opacity: 0;
+    animation: arrowRise 1.5s ease-out 0.8s forwards;
+    box-shadow: 
+      0 0 15px rgba(255,255,255,0.6),
+      0 0 40px rgba(255,255,255,0.4),
+      0 0 80px rgba(255,255,255,0.2),
+      0 0 120px rgba(255,255,255,0.1);
+  }
+  
+  @keyframes arrowRise {
+    0% { height: 0; opacity: 0; }
+    15% { opacity: 1; }
+    100% { height: 120px; opacity: 1; }
+  }
+  
+  .logo-arrow::after {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 18px solid rgba(255,255,255,0.98);
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.9)) drop-shadow(0 0 40px rgba(255,255,255,0.5));
+  }
+  
+  .logo-arrow-glow {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 15px;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.5) 0%, transparent 70%);
+    opacity: 0;
+    animation: glowAppear 0.5s ease-out 0.6s forwards;
+  }
+  
+  @keyframes glowAppear {
+    0% { opacity: 0; transform: translateX(-50%) scale(0.5); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1); }
+  }
+  
+  .logo-beam {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 0;
+    background: linear-gradient(to top, 
+      rgba(255,255,255,0.25) 0%, 
+      rgba(255,255,255,0.08) 40%,
+      transparent 100%
+    );
+    opacity: 0;
+    animation: beamExpand 1.2s ease-out 1s forwards;
+    pointer-events: none;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+  
+  @keyframes beamExpand {
+    0% { height: 0; opacity: 0; }
+    100% { height: 180px; opacity: 1; }
+  }
+  
+  .logo-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 14px;
+    margin-top: 60px;
+    opacity: 0;
+    animation: textFadeIn 1.2s ease-out 2.2s forwards;
+    text-shadow: 
+      0 0 30px rgba(255,255,255,0.5), 
+      0 0 60px rgba(255,255,255,0.3),
+      0 0 120px rgba(255,255,255,0.15);
+  }
+  
+  @keyframes textFadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  .logo-glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 55%);
+    border-radius: 50%;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: glowPulse 4s ease-in-out infinite;
+  }
+  
+  @keyframes glowPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+    50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.6; }
+  }
+  
+  /* ========== 第3页：全期总目录 ========== */
+  .toc-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #F5F5F0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 30px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    position: relative;
+  }
+  
+  .toc-page.active {
+    opacity: 1;
+  }
+  
+  .full-toc {
+    width: 100%;
+    max-width: 420px;
+  }
+  
+  .full-toc-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .full-toc-magazine {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1A1A1A;
+    letter-spacing: 6px;
+    margin-bottom: 8px;
+  }
+  
+  .full-toc-issue {
+    font-size: 11px;
+    font-weight: 100;
+    color: #aaa;
+    letter-spacing: 3px;
+  }
+  
+  .full-toc-divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(0,0,0,0.1);
+    margin: 0 auto 40px;
+  }
+  
+  .full-toc-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .full-toc-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    cursor: default;
+    transition: background 0.3s;
+  }
+  
+  .full-toc-item:last-child {
+    border-bottom: none;
+  }
+  
+  .full-toc-num {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: #ccc;
+    min-width: 40px;
+    line-height: 1;
+  }
+  
+  .full-toc-item-content {
+    flex: 1;
+  }
+  
+  .full-toc-category {
+    font-size: 10px;
+    font-weight: 100;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  
+  .cat-cover { color: #2C3E50; }
+  .cat-edu { color: #3D5A80; }
+  .cat-human { color: #8B7355; }
+  .cat-silver { color: #9B8470; }
+  .cat-life { color: #5D7A68; }
+  
+  .full-toc-article-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1A1A1A;
+    line-height: 1.3;
+    margin-bottom: 3px;
+  }
+  
+  .full-toc-article-sub {
+    font-size: 13px;
+    font-weight: 300;
+    color: #999;
+    line-height: 1.4;
+  }
+  
+  .full-toc-bottom {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .full-toc-bottom-divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(0,0,0,0.1);
+    margin: 0 auto 30px;
+  }
+  
+  .full-toc-enter {
+    font-size: 12px;
+    color: #2C3E50;
+    letter-spacing: 4px;
+    cursor: pointer;
+    animation: breathe 2s ease-in-out infinite;
+  }
+  
+  /* ========== 第4页：正文 ========== */
+  .content-page {
+    width: 100%;
+    background: #F5F5F0;
+    display: none;
+  }
+  
+  /* 开篇大图 */
+  .layout-hero {
+    width: 100%;
+    height: 70vh;
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+  
+  .layout-hero-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url('https://images.pexels.com/photos/34021104/pexels-photo-34021104.jpeg?w=1200') center/cover no-repeat;
+    z-index: 1;
+  }
+  
+  .layout-hero-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(26,26,46,0.3) 0%, rgba(15,52,96,0.6) 100%);
+    z-index: 2;
+  }
+  
+  .layout-hero-content {
+    position: relative;
+    z-index: 10;
+    padding: 40px;
+    width: 100%;
+  }
+  
+  .layout-hero-label {
+    font-size: 11px;
+    font-weight: 100;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  
+  .layout-hero-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+  
+  .layout-hero-subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    max-width: 400px;
+  }
+  
+  /* 正文段落 */
+  .body-text {
+    font-size: 16px;
+    font-weight: 300;
+    color: #1A1A1A;
+    line-height: 1.75;
+    padding: 30px;
+    text-align: justify;
+  }
+  
+  .body-text strong {
+    font-weight: 500;
+    color: #2C3E50;
+  }
+  
+  /* 图片标注 */
+  .image-caption {
+    font-size: 10px;
+    color: #aaa;
+    text-align: center;
+    padding: 8px 0;
+    letter-spacing: 1px;
+  }
+  
+  /* 上图下文 */
+  .layout-image-text {
+    margin: 40px 0;
+  }
+  
+  .image-area {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+  
+  .image-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .text-area {
+    padding: 40px;
+    background: #2C3E50;
+  }
+  
+  .text-area-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+  
+  .text-area-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.8;
+  }
+  
+  /* 金句图片 */
+  .layout-quote-image {
+    margin: 40px 0;
+    position: relative;
+  }
+  
+  .layout-quote-image img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .layout-quote-text-box {
+    background: #2C3E50;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .layout-quote-text-box p {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 2;
+    letter-spacing: 1px;
+  }
+  
+  /* 小标题卡片 */
+  .layout-card-title {
+    padding: 40px 30px;
+  }
+  
+  .title-card {
+    border: 1px solid rgba(44,62,80,0.3);
+    padding: 30px;
+    position: relative;
+  }
+  
+  .title-card::before,
+  .title-card::after,
+  .title-card-main::before,
+  .title-card-main::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid rgba(44,62,80,0.4);
+  }
+  
+  .title-card::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  .title-card::after {
+    top: -1px;
+    right: -1px;
+    border-left: none;
+    border-bottom: none;
+  }
+  
+  .title-card-main::before {
+    bottom: -1px;
+    left: -1px;
+    border-right: none;
+    border-top: none;
+  }
+  
+  .title-card-main::after {
+    bottom: -1px;
+    right: -1px;
+    border-left: none;
+    border-top: none;
+  }
+  
+  .title-card-main {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #2C3E50;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  
+  .title-card-sub {
+    font-size: 11px;
+    color: #aaa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  
+  /* 左文右图 */
+  .layout-split {
+    display: flex;
+    min-height: 400px;
+    margin: 40px 0;
+  }
+  
+  .layout-split-text {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+  }
+  
+  .layout-split-label {
+    font-size: 11px;
+    color: #2C3E50;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  
+  .layout-split-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+  
+  .layout-split-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.8;
+  }
+  
+  .layout-split-image {
+    flex: 1;
+    min-height: 300px;
+    overflow: hidden;
+  }
+  
+  .layout-split-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* 引用块 */
+  .quote-block {
+    padding: 40px 30px;
+    position: relative;
+  }
+  
+  .quote-block-line {
+    width: 1px;
+    height: 60px;
+    background: rgba(44,62,80,0.3);
+    margin-bottom: 20px;
+  }
+  
+  .quote-block-text {
+    font-size: 16px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.8;
+    padding-left: 20px;
+    border-left: 1px solid rgba(44,62,80,0.25);
+  }
+  
+  .quote-block-text::before {
+    content: '§';
+    position: absolute;
+    left: 30px;
+    top: 35px;
+    font-size: 16px;
+    color: rgba(44,62,80,0.15);
+  }
+  
+  /* 跨页大图 */
+  .layout-fullimage {
+    width: 100%;
+    height: 50vh;
+    min-height: 350px;
+    position: relative;
+    overflow: hidden;
+    margin: 40px 0;
+  }
+  
+  .layout-fullimage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .layout-fullimage-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(44,62,80,0.3) 0%, rgba(26,26,46,0.7) 100%);
+    z-index: 2;
+  }
+  
+  .layout-fullimage-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+    z-index: 10;
+  }
+  
+  .layout-fullimage-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 2px;
+  }
+  
+  /* 尾标 */
+  .footer-section {
+    padding: 60px 30px;
+    text-align: center;
+    background: #F5F5F0;
+  }
+  
+  .footer-divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(0,0,0,0.15);
+    margin: 0 auto 30px;
+  }
+  
+  .footer-end {
+    font-size: 13px;
+    font-weight: 300;
+    color: #aaa;
+    letter-spacing: 6px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-logo {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2C3E50;
+    letter-spacing: 4px;
+  }
+  
+  /* 底部导航 */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    z-index: 100;
+  }
+  
+  .bottom-nav-item {
+    font-size: 11px;
+    color: #999;
+    text-decoration: none;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  
+  .bottom-nav-item.active {
+    color: #2C3E50;
+    font-weight: 500;
+  }
+  
+  /* 折叠屏适配 */
+  @media (min-width: 700px) and (min-height: 1000px) {
+    .cover-title { font-size: 64px; }
+    .layout-hero-title { font-size: 48px; }
+    .layout-split { min-height: 500px; }
+    .body-text { font-size: 18px; padding: 40px 60px; }
+  }
+  
+  @media (max-width: 400px) {
+    .cover-title { font-size: 36px; }
+    .layout-hero-title { font-size: 26px; }
+    .layout-split { flex-direction: column; }
+    .layout-split-image { min-height: 280px; }
+    .body-text { font-size: 15px; padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 第1页：封面 -->
+<div class="cover-page" id="coverPage" onclick="enterMagazine()">
+  <div class="cover-bg"></div>
+  
+  <div class="cover-header-box">
+    <div class="cover-header-name">微光纪实</div>
+    <div class="cover-header-issue">2026年5月刊</div>
+  </div>
+  
+  <div class="cover-content">
+    <div class="cover-title">能力的退化</div>
+    <div class="cover-subtitle">我们不是在退化，是在主动投降</div>
+  </div>
+  
+  <div class="cover-hint">
+    <div class="cover-hint-text">点击进入</div>
+    <div class="cover-hint-arrow"></div>
+  </div>
+</div>
+
+<!-- 第2页：LOGO动画 -->
+<div class="logo-page" id="logoPage">
+  <div class="logo-glow"></div>
+  <div class="logo-horizon"></div>
+  <div class="logo-arrow-container">
+    <div class="logo-beam"></div>
+    <div class="logo-arrow">
+      <div class="logo-arrow-glow"></div>
+    </div>
+  </div>
+  <div class="logo-text">微光纪实</div>
+</div>
+
+<!-- 第3页：全期总目录 -->
+<div class="toc-page" id="tocPage">
+  <div class="full-toc">
+    <div class="full-toc-header">
+      <div class="full-toc-magazine">微光纪实</div>
+      <div class="full-toc-issue">2026年5月刊 · 总第1期</div>
+    </div>
+    
+    <div class="full-toc-divider"></div>
+    
+    <ul class="full-toc-list">
+      <li class="full-toc-item">
+        <span class="full-toc-num">01</span>
+        <div class="full-toc-item-content">
+          <div class="full-toc-category cat-cover">封面故事 · COVER STORY</div>
+          <div class="full-toc-article-title">能力的退化</div>
+          <div class="full-toc-article-sub">我们不是在退化，是在主动投降</div>
+        </div>
+      </li>
+      
+      <li class="full-toc-item">
+        <span class="full-toc-num">02</span>
+        <div class="full-toc-item-content">
+          <div class="full-toc-category cat-edu">教育 · EDUCATION</div>
+          <div class="full-toc-article-title">孩子的专注力，是被父母亲手拆掉的</div>
+          <div class="full-toc-article-sub">一个焦虑母亲的教育实验，揭开了当代育儿最大的悖论</div>
+        </div>
+      </li>
+      
+      <li class="full-toc-item">
+        <span class="full-toc-num">03</span>
+        <div class="full-toc-item-content">
+          <div class="full-toc-category cat-human">人文 · HUMANITIES</div>
+          <div class="full-toc-article-title">长文本之死</div>
+          <div class="full-toc-article-sub">不是不想读，是读不懂了</div>
+        </div>
+      </li>
+      
+      <li class="full-toc-item">
+        <span class="full-toc-num">04</span>
+        <div class="full-toc-item-content">
+          <div class="full-toc-category cat-silver">银发一族 · SILVER HAIR</div>
+          <div class="full-toc-article-title">72岁的老手艺与被时代甩开的人</div>
+          <div class="full-toc-article-sub">沈阳老妈的针线活，缝补着一个时代的记忆</div>
+        </div>
+      </li>
+      
+      <li class="full-toc-item">
+        <span class="full-toc-num">05</span>
+        <div class="full-toc-item-content">
+          <div class="full-toc-category cat-life">生活 · LIFE</div>
+          <div class="full-toc-article-title">夺回注意力</div>
+          <div class="full-toc-article-sub">一场注定失败的抵抗，但还是要抵抗</div>
+        </div>
+      </li>
+    </ul>
+    
+    <div class="full-toc-bottom">
+      <div class="full-toc-bottom-divider"></div>
+      <div class="full-toc-enter" onclick="showArticle()">↓ 阅读全文</div>
+    </div>
+  </div>
+</div>
+
+<!-- 第4页：正文 -->
+<div class="content-page" id="contentPage">
+  
+  <!-- 开篇大图 -->
+  <div class="layout-hero">
+    <div class="layout-hero-bg"></div>
+    <div class="layout-hero-overlay"></div>
+    <div class="layout-hero-content">
+      <div class="layout-hero-label">封面故事 · COVER STORY</div>
+      <div class="layout-hero-title">我们不是在退化，是在主动投降</div>
+      <div class="layout-hero-subtitle">一个普通上班族的24小时，折射出一代人的认知困境</div>
+    </div>
+  </div>
+  
+  <!-- 人物故事开场 -->
+  <div class="body-text">
+    <strong>李然今年28岁，互联网公司运营。她的一天是这样的：</strong>
+  </div>
+  
+  <div class="body-text">
+    早上8点，闹钟响了三次才睁眼。先刷15分钟短视频，然后完全想不起来看了什么。9点到公司，对着电脑发呆了整整两分钟，才想起今天要做什么方案。午饭时，筷子停在半空很久——一个15秒的搞笑视频让她忘了咀嚼。下午3点，打开一本书，读了三页，思绪飘到了九霄云外。晚上11点躺在床上，陷入一种说不清的焦虑：明明什么都没做，却累得不行。
+  </div>
+  
+  <!-- 配图：地铁上的低头族 -->
+  <div class="layout-image-text">
+    <div class="image-area">
+      <img src="https://images.pexels.com/photos/6538431/pexels-photo-6538431.jpeg?w=900" alt="城市街景">
+    </div>
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="text-area" style="background: #2C3E50;">
+      <div class="text-area-title">"这不是身体累。这是大脑在罢工。"</div>
+      <div class="text-area-body">
+        2026年的中国，像李然这样的人，不是少数，是主流。我们称之为"能力退化"。但这个说法本身就是在推卸责任。能力不是退化掉的，是交换掉的。
+      </div>
+    </div>
+  </div>
+  
+  <!-- 金句图片 -->
+  <div class="layout-quote-image">
+    <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?w=900&q=80&blur=2" alt="城市夜景">
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="layout-quote-text-box">
+      <p>我们用深度专注，交换了碎片化刺激。<br>
+      用长文本阅读能力，交换了算法推送的即时满足。<br>
+      用与自己独处的能力，交换了永远在线的社交连接。</p>
+    </div>
+  </div>
+  
+  <!-- 小标题卡片 -->
+  <div class="layout-card-title">
+    <div class="title-card">
+      <div class="title-card-main">一、专注力不是消失了，是被驯化了</div>
+      <div class="title-card-sub">The Taming of Attention</div>
+    </div>
+  </div>
+  
+  <!-- 正文 -->
+  <div class="body-text">
+    浙江大学2026年4月发布的研究很明确：短视频成瘾倾向越高，前额叶执行控制活跃度越低。越爱刷，越难专注。这不是新闻。新闻是：<strong>我们早就知道，但停不下来。</strong>
+  </div>
+  
+  <div class="body-text">
+    上海精神卫生中心的数据更直接：现在年轻人的注意力模式，已经从"深度专注"变成了"持续分散"。能同时处理七八个信息流，但每一股只有几秒钟。这不是疾病，这是驯化。就像动物园的老虎忘了怎么捕猎。
+  </div>
+  
+  <!-- 配图：书店里的读者 -->
+  <div class="layout-split">
+    <div class="layout-split-text">
+      <div class="layout-split-label">01 / 观察</div>
+      <div class="layout-split-title">算法比你更懂你的弱点</div>
+      <div class="layout-split-body">
+        算法以"停留时长"为王，每个APP都在争夺你的注意力。但真正的问题是：我们为什么愿意被争夺？因为专注太痛苦了。专注意味着面对空白、面对困难、面对自己可能解决不了的问题。而短视频永远提供即时反馈：15秒一个笑点，30秒一个反转，60秒一个高潮。
+      </div>
+    </div>
+    <div class="layout-split-image">
+      <img src="https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?w=600&q=80" alt="书店里的读者">
+    </div>
+  </div>
+  <div class="image-caption">图 / Unsplash</div>
+  
+  <!-- 引用块 -->
+  <div class="quote-block">
+    <div class="quote-block-line"></div>
+    <div class="quote-block-text">
+      "大脑被训练成只能接受这种节奏。知乎上'专注力'的提问一年涨了340%。人们在焦虑——然后用更碎片的方式对抗碎片化。这不是退化。这是成瘾。"
+    </div>
+  </div>
+  
+  <!-- 小标题卡片 -->
+  <div class="layout-card-title">
+    <div class="title-card">
+      <div class="title-card-main">二、独处变成了一种需要学习的技能</div>
+      <div class="title-card-sub">The Lost Art of Solitude</div>
+    </div>
+  </div>
+  
+  <!-- 正文 -->
+  <div class="body-text">
+    帕斯卡说：人类所有问题，都源于无法安静地独处。2026年，这句话有了新注解：<strong>独处需要教程了。</strong>
+  </div>
+  
+  <div class="body-text">
+    豆瓣"独居人士互助组"50万人。置顶帖："求问，一个人住，晚上下班后做什么？除了刷手机感觉自己像个废人。"68%的年轻人社交圈仅限于同事和同学。32%的人每月社交少于3次。听起来像是社交恐惧？错了。他们不是不想社交，是<strong>不知道如何面对没有屏幕的时间</strong>。
+  </div>
+  
+  <!-- 配图：深夜的窗户 -->
+  <div class="layout-image-text">
+    <div class="image-area">
+      <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?w=900&q=80" alt="深夜的窗户">
+    </div>
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="text-area" style="background: #2C3E50;">
+      <div class="text-area-title">"原来发呆也是一种能力。"</div>
+      <div class="text-area-body">
+        北京师范大学发现，2020年后出生的一代，独处能力显著下降。以前的孩子会自己玩泥巴、编故事、在房间里发呆。现在不行，必须有人陪，或者必须有屏幕。
+      </div>
+    </div>
+  </div>
+  
+  <!-- 金句图片 -->
+  <div class="layout-quote-image">
+    <img src="https://images.pexels.com/photos/33561313/pexels-photo-33561313.jpeg?w=900" alt="独处">
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="layout-quote-text-box">
+      <p>独处能力的丧失，<br>本质上是对"自己"的恐惧。</p>
+    </div>
+  </div>
+  
+  <!-- 小标题卡片 -->
+  <div class="layout-card-title">
+    <div class="title-card">
+      <div class="title-card-main">三、我们不是在读书，是在"筛选"</div>
+      <div class="title-card-sub">The Death of Long-form Reading</div>
+    </div>
+  </div>
+  
+  <!-- 正文 -->
+  <div class="body-text">
+    2026年世界读书日的数据：中国人年均阅读纸质书4.76本，但平均每本书的阅读完成率不到30%。更残酷的对比：短视频日均使用时长127分钟，电子书阅读时长23分钟。
+  </div>
+  
+  <div class="body-text">
+    一位出版人说出了行业隐痛："我们出了一本口碑很好的社科书，首印8000册，退货率60%。不是书不好，是读者发现'太长了，读不下去'。""太长了"——这三个字，是2026年读者最常见的评价。
+  </div>
+  
+  <!-- 配图：书架与手机 -->
+  <div class="layout-split">
+    <div class="layout-split-image">
+      <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&q=80" alt="书架">
+    </div>
+    <div class="layout-split-text">
+      <div class="layout-split-label">02 / 洞察</div>
+      <div class="layout-split-title">当长文本变成外语</div>
+      <div class="layout-split-body">
+        复旦大学文学教授做过一个测试：让学生读一篇5000字的短篇小说，超过一半中途放弃。教授总结："他们不是在阅读，是在'筛选'。好像每句话都必须有'干货'，否则就是浪费时间。"
+      </div>
+    </div>
+  </div>
+  <div class="image-caption">图 / Unsplash</div>
+  
+  <div class="body-text">
+    <strong>深度阅读能力的丧失，不只是习惯问题，是认知结构的改变。</strong>当大脑被训练成只能接受"15秒"、"280字"、"一图读懂"的信息密度，长文本就变成了外语。不是不想读，是读不懂了。这很可怕。因为复杂问题从来不能用140字说清楚。一个放弃长文本阅读的社会，也放弃了复杂思考的能力。
+  </div>
+  
+  <!-- 跨页大图 -->
+  <div class="layout-fullimage">
+    <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1200&q=80" alt="森林光影">
+    <div class="layout-fullimage-overlay"></div>
+    <div class="layout-fullimage-bar">
+      <div class="layout-fullimage-text">慢下来，是这个时代最危险的举动</div>
+    </div>
+  </div>
+  <div class="image-caption">图 / Unsplash</div>
+  
+  <!-- 故事回到李然 -->
+  <div class="body-text" style="padding-top: 40px;">
+    <strong>故事回到李然。</strong>
+  </div>
+  
+  <div class="body-text">
+    她后来试了一个"笨办法"：每天30分钟无屏幕时间。不刷手机，不看电视，只是坐着，看看窗外，发发呆。前三天，几乎发疯。"每一秒都难受，觉得在浪费时间。"一周后，能坐10分钟了。一个月后，看书效率提高了，开会走神少了，那种"什么都没做却累"的感觉也消失了。
+  </div>
+  
+  <!-- 配图：台灯 -->
+  <div class="layout-image-text">
+    <div class="image-area">
+      <img src="https://images.pexels.com/photos/1690843/pexels-photo-1690843.jpeg?w=900" alt="台灯">
+    </div>
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="text-area" style="background: #2C3E50;">
+      <div class="text-area-title">"原来发呆也是一种能力。"</div>
+      <div class="text-area-body">
+        她在小红书写道。这个帖子的评论区很分裂。一半是"我也试试"，一半是"我没这个时间"。"没时间"是谎言。真相是：我们害怕慢下来。慢下来意味着承认自己其实并不忙。意味着面对那些用忙碌掩盖的问题。
+      </div>
+    </div>
+  </div>
+  
+  <!-- 日出配图 -->
+  <div class="layout-quote-image">
+    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&q=80" alt="日出">
+    <div class="image-caption">图 / Unsplash</div>
+  </div>
+  
+  <!-- 错位文字 -->
+  <div class="body-text">
+    能力的退化不是必然的。它是一种选择的结果——我们选择了更快的反馈、更短的刺激、更高效的"假效率"。重新获得这些能力，需要的只是慢下来。
+  </div>
+  
+  <div class="body-text">
+    但问题是，这个时代，允许你慢下来吗？
+  </div>
+  
+  <!-- 结尾金句图片 -->
+  <div class="layout-quote-image">
+    <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=900&q=80&blur=2" alt="城市夜景">
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="layout-quote-text-box">
+      <p>退化不是终点，<br>觉醒才是开始。</p>
+    </div>
+  </div>
+  
+  <!-- 尾标 -->
+  <div class="footer-section">
+    <div class="footer-divider"></div>
+    <div class="footer-end">— END —</div>
+    <div class="footer-logo">微光纪实</div>
+    <div class="footer-divider" style="margin-top:30px;"></div>
+  </div>
+  
+</div>
+
+<!-- 底部导航 -->
+<div class="bottom-nav">
+  <a href="封面故事.html" class="bottom-nav-item active">封面</a>
+  <a href="教育.html" class="bottom-nav-item">教育</a>
+  <a href="人文.html" class="bottom-nav-item">人文</a>
+  <a href="银发.html" class="bottom-nav-item">银发</a>
+  <a href="生活.html" class="bottom-nav-item">生活</a>
+</div>
+
+<script>
+  // 进入杂志：封面点击 → LOGO动画 → 黑屏 → 目录
+  function enterMagazine() {
+    const cover = document.getElementById('coverPage');
+    const logo = document.getElementById('logoPage');
+    const toc = document.getElementById('tocPage');
+    
+    cover.style.transition = 'opacity 0.5s ease';
+    cover.style.opacity = '0';
+    
+    setTimeout(() => {
+      cover.style.display = 'none';
+      
+      logo.style.display = 'flex';
+      setTimeout(() => logo.classList.add('active'), 50);
+      
+      setTimeout(() => {
+        logo.style.transition = 'opacity 0.5s ease';
+        logo.style.opacity = '0';
+        
+        setTimeout(() => {
+          logo.style.display = 'none';
+          
+          toc.style.display = 'flex';
+          setTimeout(() => toc.classList.add('active'), 50);
+          
+          toc.scrollIntoView({ behavior: 'smooth' });
+        }, 500);
+      }, 3000);
+    }, 500);
+  }
+  
+  // 点击目录进入文章
+  function showArticle() {
+    const toc = document.getElementById('tocPage');
+    const content = document.getElementById('contentPage');
+    
+    if (toc.style.pointerEvents === 'none') return;
+    toc.style.pointerEvents = 'none';
+    
+    toc.style.transition = 'opacity 0.5s ease';
+    toc.style.opacity = '0';
+    
+    setTimeout(() => {
+      toc.style.display = 'none';
+      
+      content.style.display = 'block';
+      content.style.opacity = '0';
+      content.style.transition = 'opacity 0.8s ease';
+      
+      setTimeout(() => {
+        content.style.opacity = '1';
+        window.scrollTo({ top: content.offsetTop, behavior: 'smooth' });
+      }, 50);
+    }, 500);
+  }
+  
+  // 初始化
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('logoPage').style.display = 'none';
+    document.getElementById('tocPage').style.display = 'none';
+    document.getElementById('contentPage').style.display = 'none';
+  });
+</script>
+
+</body>
+</html>

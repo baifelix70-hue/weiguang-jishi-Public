@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>教育 | 孩子的专注力，是被父母亲手拆掉的 - 微光纪实</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@100;300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'Noto Sans SC', sans-serif; background: #F5F5F0; color: #1A1A1A; overflow-x: hidden; width: 100%; }
+  
+  /* ========== 第1页：封面 ========== */
+  .cover-page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  .cover-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80') center/cover no-repeat;
+    z-index: 1;
+  }
+  
+  .cover-bg::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(61,90,128,0.75) 0%, rgba(44,62,80,0.65) 50%, rgba(26,26,46,0.55) 100%);
+  }
+  
+  /* 顶部刊名方框 */
+  .cover-header-box {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 12px 32px;
+    text-align: center;
+  }
+  
+  .cover-header-box::before,
+  .cover-header-box::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border: 1px solid rgba(255,255,255,0.5);
+  }
+  
+  .cover-header-box::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  .cover-header-box::after {
+    bottom: -1px;
+    right: -1px;
+    border-left: none;
+    border-top: none;
+  }
+  
+  .cover-header-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 6px;
+    line-height: 1;
+  }
+  
+  .cover-header-issue {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 10px;
+    font-weight: 100;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 3px;
+    margin-top: 6px;
+  }
+  
+  .cover-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 0 40px;
+    margin-top: 40px;
+  }
+  
+  .cover-magazine-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 6px;
+    margin-bottom: 16px;
+  }
+  
+  .cover-issue {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 10px;
+    font-weight: 100;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 3px;
+    margin-bottom: 50px;
+  }
+  
+  .cover-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 6px;
+    line-height: 1.3;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  
+  .cover-subtitle {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+    max-width: 320px;
+    letter-spacing: 1px;
+  }
+  
+  .cover-hint {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+    animation: breathe 2s ease-in-out infinite;
+  }
+  
+  @keyframes breathe {
+    0%, 100% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(-5px); }
+  }
+  
+  .cover-hint-text {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  
+  .cover-hint-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 1px solid rgba(255,255,255,0.4);
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    transform: rotate(45deg);
+    margin: 0 auto;
+  }
+  
+  /* ========== 第2页：LOGO动画 ========== */
+  .logo-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #0a1628;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    overflow: hidden;
+  }
+  
+  .logo-page.active {
+    opacity: 1;
+  }
+  
+  .logo-horizon {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(255,255,255,0.2) 15%, 
+      rgba(255,255,255,0.5) 50%, 
+      rgba(255,255,255,0.2) 85%, 
+      transparent 100%
+    );
+    top: 58%;
+    left: 0;
+    opacity: 0;
+    animation: horizonAppear 1s ease-out forwards;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2), 0 0 40px rgba(255,255,255,0.1);
+  }
+  
+  @keyframes horizonAppear {
+    0% { opacity: 0; transform: scaleX(0); }
+    100% { opacity: 1; transform: scaleX(1); }
+  }
+  
+  .logo-arrow-container {
+    position: relative;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .logo-arrow {
+    width: 4px;
+    height: 0;
+    background: linear-gradient(to top, 
+      rgba(255,255,255,1) 0%, 
+      rgba(255,255,255,0.9) 20%,
+      rgba(255,255,255,0.6) 50%,
+      rgba(255,255,255,0.2) 80%,
+      rgba(255,255,255,0.05) 100%
+    );
+    position: relative;
+    opacity: 0;
+    animation: arrowRise 1.5s ease-out 0.8s forwards;
+    box-shadow: 
+      0 0 15px rgba(255,255,255,0.6),
+      0 0 40px rgba(255,255,255,0.4),
+      0 0 80px rgba(255,255,255,0.2),
+      0 0 120px rgba(255,255,255,0.1);
+  }
+  
+  @keyframes arrowRise {
+    0% { height: 0; opacity: 0; }
+    15% { opacity: 1; }
+    100% { height: 120px; opacity: 1; }
+  }
+  
+  .logo-arrow::after {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 18px solid rgba(255,255,255,0.98);
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.9)) drop-shadow(0 0 40px rgba(255,255,255,0.5));
+  }
+  
+  .logo-arrow-glow {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 15px;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.5) 0%, transparent 70%);
+    opacity: 0;
+    animation: glowAppear 0.5s ease-out 0.6s forwards;
+  }
+  
+  @keyframes glowAppear {
+    0% { opacity: 0; transform: translateX(-50%) scale(0.5); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1); }
+  }
+  
+  .logo-beam {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 0;
+    background: linear-gradient(to top, 
+      rgba(255,255,255,0.25) 0%, 
+      rgba(255,255,255,0.08) 40%,
+      transparent 100%
+    );
+    opacity: 0;
+    animation: beamExpand 1.2s ease-out 1s forwards;
+    pointer-events: none;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+  
+  @keyframes beamExpand {
+    0% { height: 0; opacity: 0; }
+    100% { height: 180px; opacity: 1; }
+  }
+  
+  .logo-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 14px;
+    margin-top: 60px;
+    opacity: 0;
+    animation: textFadeIn 1.2s ease-out 2.2s forwards;
+    text-shadow: 
+      0 0 30px rgba(255,255,255,0.5), 
+      0 0 60px rgba(255,255,255,0.3),
+      0 0 120px rgba(255,255,255,0.15);
+  }
+  
+  @keyframes textFadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  .logo-glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 55%);
+    border-radius: 50%;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: glowPulse 4s ease-in-out infinite;
+  }
+  
+  @keyframes glowPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+    50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.6; }
+  }
+  
+  /* ========== 第3页：童趣不规则目录 ========== */
+  .toc-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #F5F5F0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 30px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .toc-page.active {
+    opacity: 1;
+  }
+  
+  .playful-toc {
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    min-height: 500px;
+  }
+  
+  /* 积木装饰 - 左上 */
+  .toy-block {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    width: 34px;
+    height: 34px;
+    border: 2.5px solid #3D5A80;
+    border-radius: 4px;
+    transform: rotate(-8deg);
+    opacity: 0.6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+  
+  .toy-block::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 4px;
+    width: 10px;
+    height: 6px;
+    background: #3D5A80;
+    border-radius: 2px 2px 0 0;
+    opacity: 0.5;
+  }
+  
+  /* 蜡笔装饰 - 右上 */
+  .toy-crayon {
+    position: absolute;
+    top: 60px;
+    right: 15px;
+    width: 8px;
+    height: 50px;
+    background: #3D5A80;
+    border-radius: 4px 4px 0 0;
+    transform: rotate(25deg);
+    opacity: 0.4;
+  }
+  
+  .toy-crayon::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: -2px;
+    width: 12px;
+    height: 10px;
+    background: #E8C84A;
+    border-radius: 0 0 3px 3px;
+  }
+  
+  /* 纸飞机 - 右下 */
+  .toy-plane {
+    position: absolute;
+    bottom: 80px;
+    right: 20px;
+    width: 40px;
+    height: 18px;
+    opacity: 0.5;
+    transform: rotate(-15deg);
+  }
+  
+  .toy-plane svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* 小圆点装饰 */
+  .toy-dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #3D5A80;
+    border-radius: 50%;
+    opacity: 0.25;
+  }
+  
+  /* 栏目标签 */
+  .playful-label {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 100;
+    color: #3D5A80;
+    letter-spacing: 4px;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* 主标题 - 错落大字 */
+  .playful-title-group {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 30px;
+  }
+  
+  .playful-title-big {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 52px;
+    font-weight: 700;
+    color: #1A1A1A;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    text-align: right;
+    margin-right: 40px;
+  }
+  
+  .playful-title-small {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: #666;
+    text-align: left;
+    margin-left: 30px;
+    margin-top: -5px;
+    letter-spacing: 1px;
+  }
+  
+  .playful-title-sub {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: #999;
+    text-align: right;
+    margin-right: 20px;
+    margin-top: 8px;
+    letter-spacing: 2px;
+  }
+  
+  /* 关键词不规则分布 */
+  .playful-keywords {
+    position: relative;
+    z-index: 2;
+    margin: 40px 0 50px;
+  }
+  
+  .playful-kw {
+    position: absolute;
+    font-size: 13px;
+    font-weight: 400;
+    color: #3D5A80;
+    letter-spacing: 1px;
+    border: 1.5px solid rgba(61,90,128,0.3);
+    padding: 5px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  
+  .kw-1 { top: 0; left: 5%; transform: rotate(-3deg); }
+  .kw-2 { top: 10px; left: 45%; transform: rotate(2deg); }
+  .kw-3 { top: 50px; left: 70%; transform: rotate(-5deg); font-size: 15px !important; }
+  .kw-4 { top: 40px; left: 20%; transform: rotate(1deg); }
+  .kw-5 { top: 85px; left: 50%; transform: rotate(-2deg); font-size: 11px !important; }
+  
+  .playful-keywords-spacer {
+    height: 130px;
+  }
+  
+  /* 分隔 + 摘要 */
+  .playful-divider {
+    width: 60px;
+    height: 1px;
+    background: rgba(0,0,0,0.12);
+    margin: 0 auto 25px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .playful-summary {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+    color: #888;
+    line-height: 1.8;
+    max-width: 280px;
+    margin: 0 auto 40px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .playful-enter {
+    text-align: center;
+    font-size: 12px;
+    color: #3D5A80;
+    letter-spacing: 4px;
+    cursor: pointer;
+    animation: breathe 2s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* ========== 第4页：正文 ========== */
+  .content-page {
+    width: 100%;
+    background: #F5F5F0;
+    display: none;
+  }
+  
+  /* 开篇大图 */
+  .layout-hero {
+    width: 100%;
+    height: 70vh;
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+  
+  .layout-hero-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80') center/cover no-repeat;
+    z-index: 1;
+  }
+  
+  .layout-hero-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(61,90,128,0.3) 0%, rgba(44,62,80,0.6) 100%);
+    z-index: 2;
+  }
+  
+  .layout-hero-content {
+    position: relative;
+    z-index: 10;
+    padding: 40px;
+    width: 100%;
+  }
+  
+  .layout-hero-label {
+    font-size: 11px;
+    font-weight: 100;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  
+  .layout-hero-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+  
+  .layout-hero-subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    max-width: 400px;
+  }
+  
+  /* 正文段落 */
+  .body-text {
+    font-size: 16px;
+    font-weight: 300;
+    color: #1A1A1A;
+    line-height: 1.75;
+    padding: 30px;
+    text-align: justify;
+  }
+  
+  .body-text strong {
+    font-weight: 500;
+    color: #3D5A80;
+  }
+  
+  /* 图片标注 */
+  .image-caption {
+    font-size: 10px;
+    color: #aaa;
+    text-align: center;
+    padding: 8px 0;
+    letter-spacing: 1px;
+  }
+  
+  /* 上图下文 */
+  .layout-image-text {
+    margin: 40px 0;
+  }
+  
+  .image-area {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+  
+  .image-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .text-area {
+    padding: 40px;
+    background: #3D5A80;
+  }
+  
+  .text-area-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+  
+  .text-area-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.8;
+  }
+  
+  /* 金句图片 */
+  .layout-quote-image {
+    margin: 40px 0;
+    position: relative;
+  }
+  
+  .layout-quote-image img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .layout-quote-text-box {
+    background: #3D5A80;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .layout-quote-text-box p {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 2;
+    letter-spacing: 1px;
+  }
+  
+  /* 小标题卡片 */
+  .layout-card-title {
+    padding: 40px 30px;
+  }
+  
+  .title-card {
+    border: 1px solid rgba(61,90,128,0.3);
+    padding: 30px;
+    position: relative;
+  }
+  
+  .title-card::before,
+  .title-card::after,
+  .title-card-main::before,
+  .title-card-main::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid rgba(61,90,128,0.4);
+  }
+  
+  .title-card::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  .title-card::after {
+    top: -1px;
+    right: -1px;
+    border-left: none;
+    border-bottom: none;
+  }
+  
+  .title-card-main::before {
+    bottom: -1px;
+    left: -1px;
+    border-right: none;
+    border-top: none;
+  }
+  
+  .title-card-main::after {
+    bottom: -1px;
+    right: -1px;
+    border-left: none;
+    border-top: none;
+  }
+  
+  .title-card-main {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #3D5A80;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  
+  .title-card-sub {
+    font-size: 11px;
+    color: #aaa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  
+  /* 左文右图 */
+  .layout-split {
+    display: flex;
+    min-height: 400px;
+    margin: 40px 0;
+  }
+  
+  .layout-split-text {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+  }
+  
+  .layout-split-label {
+    font-size: 11px;
+    color: #3D5A80;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  
+  .layout-split-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+  
+  .layout-split-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.8;
+  }
+  
+  .layout-split-image {
+    flex: 1;
+    min-height: 300px;
+    overflow: hidden;
+  }
+  
+  .layout-split-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* 引用块 */
+  .quote-block {
+    padding: 40px 30px;
+    position: relative;
+  }
+  
+  .quote-block-line {
+    width: 1px;
+    height: 60px;
+    background: rgba(61,90,128,0.3);
+    margin-bottom: 20px;
+  }
+  
+  .quote-block-text {
+    font-size: 16px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.8;
+    padding-left: 20px;
+    border-left: 1px solid rgba(61,90,128,0.25);
+  }
+  
+  .quote-block-text::before {
+    content: '§';
+    position: absolute;
+    left: 30px;
+    top: 35px;
+    font-size: 16px;
+    color: rgba(61,90,128,0.15);
+  }
+  
+  /* 跨页大图 */
+  .layout-fullimage {
+    width: 100%;
+    height: 50vh;
+    min-height: 350px;
+    position: relative;
+    overflow: hidden;
+    margin: 40px 0;
+  }
+  
+  .layout-fullimage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .layout-fullimage-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(61,90,128,0.3) 0%, rgba(44,62,80,0.7) 100%);
+    z-index: 2;
+  }
+  
+  .layout-fullimage-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+    z-index: 10;
+  }
+  
+  .layout-fullimage-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 2px;
+  }
+  
+  /* 尾标 */
+  .footer-section {
+    padding: 60px 30px;
+    text-align: center;
+    background: #F5F5F0;
+  }
+  
+  .footer-divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(0,0,0,0.15);
+    margin: 0 auto 30px;
+  }
+  
+  .footer-end {
+    font-size: 13px;
+    font-weight: 300;
+    color: #aaa;
+    letter-spacing: 6px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-logo {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #3D5A80;
+    letter-spacing: 4px;
+  }
+  
+  /* 底部导航 */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    z-index: 100;
+  }
+  
+  .bottom-nav-item {
+    font-size: 11px;
+    color: #999;
+    text-decoration: none;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  
+  .bottom-nav-item.active {
+    color: #3D5A80;
+    font-weight: 500;
+  }
+  
+  /* 折叠屏适配 */
+  @media (min-width: 700px) and (min-height: 1000px) {
+    .cover-title { font-size: 64px; }
+    .layout-hero-title { font-size: 48px; }
+    .layout-split { min-height: 500px; }
+    .body-text { font-size: 18px; padding: 40px 60px; }
+  }
+  
+  @media (max-width: 400px) {
+    .cover-title { font-size: 36px; }
+    .layout-hero-title { font-size: 26px; }
+    .layout-split { flex-direction: column; }
+    .layout-split-image { min-height: 280px; }
+    .body-text { font-size: 15px; padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 第1页：封面 -->
+<div class="cover-page" id="coverPage" onclick="enterMagazine()">
+  <div class="cover-bg"></div>
+  
+  <div class="cover-header-box">
+    <div class="cover-header-name">微光纪实</div>
+    <div class="cover-header-issue">2026年5月刊</div>
+  </div>
+  
+  <div class="cover-content">
+    <div class="cover-title">孩子的专注力</div>
+    <div class="cover-subtitle">是被父母亲手拆掉的</div>
+  </div>
+  
+  <div class="cover-hint">
+    <div class="cover-hint-text">点击进入</div>
+    <div class="cover-hint-arrow"></div>
+  </div>
+</div>
+
+<!-- 第2页：LOGO动画 -->
+<div class="logo-page" id="logoPage">
+  <div class="logo-glow"></div>
+  <div class="logo-horizon"></div>
+  <div class="logo-arrow-container">
+    <div class="logo-beam"></div>
+    <div class="logo-arrow">
+      <div class="logo-arrow-glow"></div>
+    </div>
+  </div>
+  <div class="logo-text">微光纪实</div>
+</div>
+
+<!-- 第3页：童趣不规则目录 -->
+<div class="toc-page" id="tocPage">
+  <div class="playful-toc">
+    <!-- 积木装饰 -->
+    <div class="toy-block">✎</div>
+    <div class="toy-crayon"></div>
+    <div class="toy-plane">
+      <svg viewBox="0 0 40 18"><polygon points="0,9 20,0 40,9 30,12 20,4 10,12" fill="none" stroke="#3D5A80" stroke-width="1.5"/></svg>
+    </div>
+    <div class="toy-dot" style="top:100px;left:80px;"></div>
+    <div class="toy-dot" style="top:140px;right:50px;"></div>
+    <div class="toy-dot" style="bottom:120px;left:40%;"></div>
+    
+    <div class="playful-label">栏目 01 · 教 育</div>
+    
+    <div class="playful-title-group">
+      <div class="playful-title-big">孩子的专注力</div>
+      <div class="playful-title-small">是被父母</div>
+      <div class="playful-title-sub">亲手拆掉的</div>
+    </div>
+    
+    <div class="playful-keywords">
+      <div class="playful-keywords-spacer"></div>
+      <span class="playful-kw kw-1">专注力</span>
+      <span class="playful-kw kw-2">过度干预</span>
+      <span class="playful-kw kw-3">焦虑的父母</span>
+      <span class="playful-kw kw-4">培训班骗局</span>
+    </div>
+    
+    <div class="playful-divider"></div>
+    
+    <div class="playful-summary">
+      从"别输在起跑线"到"必须培养专注力"，焦虑的父母正在用过度干预，亲手拆掉孩子最宝贵的天赋。
+    </div>
+    
+    <div class="playful-enter" onclick="showArticle()">↓ 阅读全文</div>
+  </div>
+</div>
+
+<!-- 第4页：正文 -->
+<div class="content-page" id="contentPage">
+  
+  <!-- 开篇大图 -->
+  <div class="layout-hero">
+    <div class="layout-hero-bg"></div>
+    <div class="layout-hero-overlay"></div>
+    <div class="layout-hero-content">
+      <div class="layout-hero-label">栏目 01 · EDUCATION</div>
+      <div class="layout-hero-title">孩子的专注力，是被父母亲手拆掉的</div>
+      <div class="layout-hero-subtitle">一个焦虑母亲的教育实验，揭开了当代育儿最大的悖论</div>
+    </div>
+  </div>
+  
+  <!-- 人物故事开场 -->
+  <div class="body-text">
+    <strong>陈敏今年35岁，儿子小宇上小学三年级。她的日常是这样的：</strong>
+  </div>
+  
+  <div class="body-text">
+    早上6点半起床，先检查小宇的作业本。发现一个错别字，立刻让重写。7点吃早餐，她一边刷"专注力训练"的短视频，一边催促小宇快点吃。7点半送上学，路上还在背乘法口诀。下午4点接放学，直接送进"专注力培训班"。晚上8点，小宇写作业，她在旁边盯着，每写错一个字就纠正一次。10点睡觉，她躺在床上继续刷"如何培养学霸"的帖子。
+  </div>
+  
+  <!-- 配图：教室里的孩子 -->
+  <div class="layout-image-text">
+    <div class="image-area">
+      <img src="https://images.pexels.com/photos/7079144/pexels-photo-7079144.jpeg?w=900" alt="教室场景">
+    </div>
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="text-area" style="background: #3D5A80;">
+      <div class="text-area-title">"我越努力，孩子越走神。"</div>
+      <div class="text-area-body">
+        陈敏的困惑不是个案。2026年，中国家长每年在"专注力培训"上花费超过200亿元，但孩子的专注力问题却越来越严重。这不是悖论，这是因果。
+      </div>
+    </div>
+  </div>
+  
+  <!-- 金句图片 -->
+  <div class="layout-quote-image">
+    <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=900&q=80&blur=1" alt="书本与铅笔">
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="layout-quote-text-box">
+      <p>专注力不是培养出来的，<br>是保护出来的。</p>
+    </div>
+  </div>
+  
+  <!-- 小标题卡片 -->
+  <div class="layout-card-title">
+    <div class="title-card">
+      <div class="title-card-main">一、焦虑是专注力的最大敌人</div>
+      <div class="title-card-sub">The Enemy of Focus</div>
+    </div>
+  </div>
+  
+  <!-- 正文 -->
+  <div class="body-text">
+    北京师范大学2025年的研究很明确：父母焦虑程度越高，孩子的专注力表现越差。不是孩子有问题，是父母的焦虑传染给了孩子。当孩子感受到"我必须做好，否则妈妈会失望"的压力时，大脑会进入防御状态——不是专注，是紧张。
+  </div>
+  
+  <div class="body-text">
+    更残酷的是，这种焦虑往往披着"为你好"的外衣。"我盯着你是因为爱你"、"我纠正你是因为在乎你"——这些话语的潜台词是：你不够好，需要我时刻修正。一个不断被纠正的孩子，学不会自我监控，只会学会依赖外部评价。
+  </div>
+  
+  <!-- 配图：孩子写作业 -->
+  <div class="layout-split">
+    <div class="layout-split-text">
+      <div class="layout-split-label">01 / 观察</div>
+      <div class="layout-split-title">被过度干预的童年</div>
+      <div class="layout-split-body">
+        陈敏后来发现，小宇在培训班里表现很好，回家就变差。原因很简单：培训班有明确的规则和边界，家里只有无尽的纠正。当每一个行为都被评判，孩子就失去了"做自己"的空间。而专注力，恰恰需要在"不被打扰"中生长。
+      </div>
+    </div>
+    <div class="layout-split-image">
+      <img src="https://images.pexels.com/photos/3662662/pexels-photo-3662662.jpeg?w=600" alt="孩子学习">
+    </div>
+  </div>
+  <div class="image-caption">图 / Unsplash</div>
+  
+  <!-- 引用块 -->
+  <div class="quote-block">
+    <div class="quote-block-line"></div>
+    <div class="quote-block-text">
+      "最讽刺的是，那些天天喊着'培养孩子专注力'的家长，正是孩子专注力最大的破坏者。他们的每一次打断、每一次纠正、每一次'为你好'的干预，都在告诉孩子：你自己的判断不可靠，必须依赖我。"
+    </div>
+  </div>
+  
+  <!-- 小标题卡片 -->
+  <div class="layout-card-title">
+    <div class="title-card">
+      <div class="title-card-main">二、专注力培训班：一场精心设计的骗局</div>
+      <div class="title-card-sub">The Training Industry</div>
+    </div>
+  </div>
+  
+  <!-- 正文 -->
+  <div class="body-text">
+    2026年，中国专注力培训市场规模超过200亿元。但中科院心理所的研究显示：这些培训的效果，在三个月后基本消失。为什么？因为培训班的"专注"是表演性的——在特定环境、特定规则、特定奖励下的专注，不等于真实的专注能力。
+  </div>
+  
+  <div class="body-text">
+    更深层的问题是：培训班把专注力变成了一种可以"购买"的商品。家长花钱，孩子上课，问题就解决了——这种逻辑本身就是逃避。逃避什么？逃避家长自己需要改变的事实。
+  </div>
+  
+  <!-- 配图：培训班场景 -->
+  <div class="layout-image-text">
+    <div class="image-area">
+      <img src="https://images.pexels.com/photos/37698369/pexels-photo-37698369.jpeg?w=900" alt="培训班场景">
+    </div>
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="text-area" style="background: #3D5A80;">
+      <div class="text-area-title">"专注力不是技能，是状态。"</div>
+      <div class="text-area-body">
+        一位儿童心理学家说："你不能通过上课让孩子学会专注，就像你不能通过上课让孩子学会快乐。专注是一种内在状态，需要安全、自由、不被评判的环境。"
+      </div>
+    </div>
+  </div>
+  
+  <!-- 小标题卡片 -->
+  <div class="layout-card-title">
+    <div class="title-card">
+      <div class="title-card-main">三、保护专注力，从"不做什么"开始</div>
+      <div class="title-card-sub">The Art of Non-doing</div>
+    </div>
+  </div>
+  
+  <!-- 正文 -->
+  <div class="body-text">
+    陈敏后来做了一个实验：一周不纠正小宇的任何行为，只陪伴，不评判。第一周，小宇反而更走神了——他在测试边界。第二周，开始自己安排作业顺序。第三周，能安静阅读20分钟了。一个月后，老师反馈：小宇上课注意力明显提高了。
+  </div>
+  
+  <!-- 配图：孩子阅读 -->
+  <div class="layout-split">
+    <div class="layout-split-image">
+      <img src="https://images.pexels.com/photos/33807622/pexels-photo-33807622.jpeg?w=600" alt="阅读">
+    </div>
+    <div class="layout-split-text">
+      <div class="layout-split-label">02 / 洞察</div>
+      <div class="layout-split-title">留白，是最好的教育</div>
+      <div class="layout-split-body">
+        这个实验的启示很简单：专注力不是"培养"出来的，是"保护"出来的。保护孩子的好奇心，保护他们的试错空间，保护他们"什么都不做"的权利。当一个孩子知道"我可以犯错，我不会被纠正"，他才能真正地投入。
+      </div>
+    </div>
+  </div>
+  <div class="image-caption">图 / Unsplash</div>
+  
+  <div class="body-text">
+    <strong>教育的悖论在于：你越用力，效果越差。</strong>就像握沙，握得越紧，流失越快。专注力也是如此——它需要空间，需要信任，需要家长退后一步的勇气。
+  </div>
+  
+  <!-- 跨页大图 -->
+  <div class="layout-fullimage">
+    <img src="https://images.pexels.com/photos/33574654/pexels-photo-33574654.jpeg?w=1200" alt="教室窗外">
+    <div class="layout-fullimage-overlay"></div>
+    <div class="layout-fullimage-bar">
+      <div class="layout-fullimage-text">最好的教育，是让孩子忘记正在被教育</div>
+    </div>
+  </div>
+  <div class="image-caption">图 / Unsplash</div>
+  
+  <!-- 尾标 -->
+  <div class="footer-section">
+    <div class="footer-divider"></div>
+    <div class="footer-end">— END —</div>
+    <div class="footer-logo">微光纪实</div>
+    <div class="footer-divider" style="margin-top:30px;"></div>
+  </div>
+  
+</div>
+
+<!-- 底部导航 -->
+<div class="bottom-nav">
+  <a href="封面故事.html" class="bottom-nav-item">封面</a>
+  <a href="教育.html" class="bottom-nav-item active">教育</a>
+  <a href="人文.html" class="bottom-nav-item">人文</a>
+  <a href="银发.html" class="bottom-nav-item">银发</a>
+  <a href="生活.html" class="bottom-nav-item">生活</a>
+</div>
+
+<script>
+  // 进入杂志：封面点击 → LOGO动画 → 黑屏 → 目录
+  function enterMagazine() {
+    const cover = document.getElementById('coverPage');
+    const logo = document.getElementById('logoPage');
+    const toc = document.getElementById('tocPage');
+    
+    cover.style.transition = 'opacity 0.5s ease';
+    cover.style.opacity = '0';
+    
+    setTimeout(() => {
+      cover.style.display = 'none';
+      
+      logo.style.display = 'flex';
+      setTimeout(() => logo.classList.add('active'), 50);
+      
+      setTimeout(() => {
+        logo.style.transition = 'opacity 0.5s ease';
+        logo.style.opacity = '0';
+        
+        setTimeout(() => {
+          logo.style.display = 'none';
+          
+          toc.style.display = 'flex';
+          setTimeout(() => toc.classList.add('active'), 50);
+          
+          toc.scrollIntoView({ behavior: 'smooth' });
+        }, 500);
+      }, 3000);
+    }, 500);
+  }
+  
+  // 点击目录进入文章
+  function showArticle() {
+    const toc = document.getElementById('tocPage');
+    const content = document.getElementById('contentPage');
+    
+    if (toc.style.pointerEvents === 'none') return;
+    toc.style.pointerEvents = 'none';
+    
+    toc.style.transition = 'opacity 0.5s ease';
+    toc.style.opacity = '0';
+    
+    setTimeout(() => {
+      toc.style.display = 'none';
+      
+      content.style.display = 'block';
+      content.style.opacity = '0';
+      content.style.transition = 'opacity 0.8s ease';
+      
+      setTimeout(() => {
+        content.style.opacity = '1';
+        window.scrollTo({ top: content.offsetTop, behavior: 'smooth' });
+      }, 50);
+    }, 500);
+  }
+  
+  // 初始化
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('logoPage').style.display = 'none';
+    document.getElementById('tocPage').style.display = 'none';
+    document.getElementById('contentPage').style.display = 'none';
+  });
+</script>
+
+</body>
+</html>

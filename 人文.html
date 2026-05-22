@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>人文 | 长文本之死 - 微光纪实</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@100;300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'Noto Sans SC', sans-serif; background: #F5F5F0; color: #1A1A1A; overflow-x: hidden; width: 100%; }
+  
+  /* ========== 第1页：封面 ========== */
+  .cover-page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  .cover-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80') center/cover no-repeat;
+    z-index: 1;
+  }
+  
+  .cover-bg::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(139,115,85,0.75) 0%, rgba(107,87,63,0.65) 50%, rgba(80,65,45,0.55) 100%);
+  }
+  
+  /* 顶部刊名方框 */
+  .cover-header-box {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 12px 32px;
+    text-align: center;
+  }
+  
+  .cover-header-box::before,
+  .cover-header-box::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border: 1px solid rgba(255,255,255,0.5);
+  }
+  
+  .cover-header-box::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  .cover-header-box::after {
+    bottom: -1px;
+    right: -1px;
+    border-left: none;
+    border-top: none;
+  }
+  
+  .cover-header-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 6px;
+    line-height: 1;
+  }
+  
+  .cover-header-issue {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 10px;
+    font-weight: 100;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 3px;
+    margin-top: 6px;
+  }
+  
+  .cover-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 0 40px;
+    margin-top: 40px;
+  }
+  
+  .cover-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 8px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  
+  .cover-subtitle {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+    max-width: 320px;
+    letter-spacing: 1px;
+  }
+  
+  .cover-hint {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+    animation: breathe 2s ease-in-out infinite;
+  }
+  
+  @keyframes breathe {
+    0%, 100% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(-5px); }
+  }
+  
+  .cover-hint-text {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  
+  .cover-hint-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 1px solid rgba(255,255,255,0.4);
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    transform: rotate(45deg);
+    margin: 0 auto;
+  }
+  
+  /* ========== 第2页：LOGO动画 ========== */
+  .logo-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #0a1628;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    overflow: hidden;
+  }
+  
+  .logo-page.active {
+    opacity: 1;
+  }
+  
+  .logo-horizon {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(255,255,255,0.2) 15%, 
+      rgba(255,255,255,0.5) 50%, 
+      rgba(255,255,255,0.2) 85%, 
+      transparent 100%
+    );
+    top: 58%;
+    left: 0;
+    opacity: 0;
+    animation: horizonAppear 1s ease-out forwards;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2), 0 0 40px rgba(255,255,255,0.1);
+  }
+  
+  @keyframes horizonAppear {
+    0% { opacity: 0; transform: scaleX(0); }
+    100% { opacity: 1; transform: scaleX(1); }
+  }
+  
+  .logo-arrow-container {
+    position: relative;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .logo-arrow {
+    width: 4px;
+    height: 0;
+    background: linear-gradient(to top, 
+      rgba(255,255,255,1) 0%, 
+      rgba(255,255,255,0.9) 20%,
+      rgba(255,255,255,0.6) 50%,
+      rgba(255,255,255,0.2) 80%,
+      rgba(255,255,255,0.05) 100%
+    );
+    position: relative;
+    opacity: 0;
+    animation: arrowRise 1.5s ease-out 0.8s forwards;
+    box-shadow: 
+      0 0 15px rgba(255,255,255,0.6),
+      0 0 40px rgba(255,255,255,0.4),
+      0 0 80px rgba(255,255,255,0.2),
+      0 0 120px rgba(255,255,255,0.1);
+  }
+  
+  @keyframes arrowRise {
+    0% { height: 0; opacity: 0; }
+    15% { opacity: 1; }
+    100% { height: 120px; opacity: 1; }
+  }
+  
+  .logo-arrow::after {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 18px solid rgba(255,255,255,0.98);
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.9)) drop-shadow(0 0 40px rgba(255,255,255,0.5));
+  }
+  
+  .logo-arrow-glow {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 15px;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.5) 0%, transparent 70%);
+    opacity: 0;
+    animation: glowAppear 0.5s ease-out 0.6s forwards;
+  }
+  
+  @keyframes glowAppear {
+    0% { opacity: 0; transform: translateX(-50%) scale(0.5); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1); }
+  }
+  
+  .logo-beam {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 0;
+    background: linear-gradient(to top, 
+      rgba(255,255,255,0.25) 0%, 
+      rgba(255,255,255,0.08) 40%,
+      transparent 100%
+    );
+    opacity: 0;
+    animation: beamExpand 1.2s ease-out 1s forwards;
+    pointer-events: none;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+  
+  @keyframes beamExpand {
+    0% { height: 0; opacity: 0; }
+    100% { height: 180px; opacity: 1; }
+  }
+  
+  .logo-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 14px;
+    margin-top: 60px;
+    opacity: 0;
+    animation: textFadeIn 1.2s ease-out 2.2s forwards;
+    text-shadow: 
+      0 0 30px rgba(255,255,255,0.5), 
+      0 0 60px rgba(255,255,255,0.3),
+      0 0 120px rgba(255,255,255,0.15);
+  }
+  
+  @keyframes textFadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  .logo-glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 55%);
+    border-radius: 50%;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: glowPulse 4s ease-in-out infinite;
+  }
+  
+  @keyframes glowPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+    50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.6; }
+  }
+  
+  /* ========== 第3页：海报式目录（竖排大字+右侧文字块） ========== */
+  .toc-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #F5F5F0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 30px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    position: relative;
+  }
+  
+  .toc-page.active {
+    opacity: 1;
+  }
+  
+  .poster-toc {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .poster-toc-vertical {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: #1A1A1A;
+    writing-mode: vertical-rl;
+    letter-spacing: 8px;
+    line-height: 1.2;
+    margin-bottom: 30px;
+  }
+  
+  .poster-toc-side {
+    text-align: center;
+    max-width: 280px;
+  }
+  
+  .poster-toc-label {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 11px;
+    font-weight: 100;
+    color: #8B7355;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  
+  .poster-toc-summary {
+    font-size: 14px;
+    font-weight: 300;
+    color: #888;
+    line-height: 1.8;
+    margin-bottom: 30px;
+  }
+  
+  .poster-toc-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+  
+  .poster-toc-keyword {
+    font-size: 12px;
+    color: #8B7355;
+    border: 1px solid rgba(139,115,85,0.3);
+    padding: 5px 14px;
+    letter-spacing: 1px;
+  }
+  
+  .poster-toc-divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(0,0,0,0.1);
+    margin: 0 auto 20px;
+  }
+  
+  .poster-toc-date {
+    font-size: 11px;
+    color: #ccc;
+    letter-spacing: 3px;
+  }
+  
+  .poster-toc-enter {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #8B7355;
+    letter-spacing: 4px;
+    cursor: pointer;
+    animation: breathe 2s ease-in-out infinite;
+  }
+  
+  /* ========== 第4页：正文 ========== */
+  .content-page {
+    width: 100%;
+    background: #F5F5F0;
+    display: none;
+  }
+  
+  .layout-hero {
+    width: 100%;
+    height: 70vh;
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+  
+  .layout-hero-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80') center/cover no-repeat;
+    z-index: 1;
+  }
+  
+  .layout-hero-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(139,115,85,0.3) 0%, rgba(80,65,45,0.6) 100%);
+    z-index: 2;
+  }
+  
+  .layout-hero-content {
+    position: relative;
+    z-index: 10;
+    padding: 40px;
+    width: 100%;
+  }
+  
+  .layout-hero-label {
+    font-size: 11px;
+    font-weight: 100;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  
+  .layout-hero-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+  
+  .layout-hero-subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    max-width: 400px;
+  }
+  
+  .body-text {
+    font-size: 16px;
+    font-weight: 300;
+    color: #1A1A1A;
+    line-height: 1.75;
+    padding: 30px;
+    text-align: justify;
+  }
+  
+  .body-text strong {
+    font-weight: 500;
+    color: #8B7355;
+  }
+  
+  .image-caption {
+    font-size: 10px;
+    color: #aaa;
+    text-align: center;
+    padding: 8px 0;
+    letter-spacing: 1px;
+  }
+  
+  .layout-image-text {
+    margin: 40px 0;
+  }
+  
+  .image-area {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+  
+  .image-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .text-area {
+    padding: 40px;
+    background: #8B7355;
+  }
+  
+  .text-area-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+  
+  .text-area-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.8;
+  }
+  
+  .layout-quote-image {
+    margin: 40px 0;
+    position: relative;
+  }
+  
+  .layout-quote-image img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .layout-quote-text-box {
+    background: #8B7355;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .layout-quote-text-box p {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 2;
+    letter-spacing: 1px;
+  }
+  
+  .layout-card-title {
+    padding: 40px 30px;
+  }
+  
+  .title-card {
+    border: 1px solid rgba(139,115,85,0.3);
+    padding: 30px;
+    position: relative;
+  }
+  
+  .title-card::before,
+  .title-card::after,
+  .title-card-main::before,
+  .title-card-main::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid rgba(139,115,85,0.4);
+  }
+  
+  .title-card::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  .title-card::after {
+    top: -1px;
+    right: -1px;
+    border-left: none;
+    border-bottom: none;
+  }
+  
+  .title-card-main::before {
+    bottom: -1px;
+    left: -1px;
+    border-right: none;
+    border-top: none;
+  }
+  
+  .title-card-main::after {
+    bottom: -1px;
+    right: -1px;
+    border-left: none;
+    border-top: none;
+  }
+  
+  .title-card-main {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #8B7355;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  
+  .title-card-sub {
+    font-size: 11px;
+    color: #aaa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  
+  .layout-split {
+    display: flex;
+    min-height: 400px;
+    margin: 40px 0;
+  }
+  
+  .layout-split-text {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+  }
+  
+  .layout-split-label {
+    font-size: 11px;
+    color: #8B7355;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  
+  .layout-split-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+  
+  .layout-split-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.8;
+  }
+  
+  .layout-split-image {
+    flex: 1;
+    min-height: 300px;
+    overflow: hidden;
+  }
+  
+  .layout-split-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .quote-block {
+    padding: 40px 30px;
+    position: relative;
+  }
+  
+  .quote-block-line {
+    width: 1px;
+    height: 60px;
+    background: rgba(139,115,85,0.3);
+    margin-bottom: 20px;
+  }
+  
+  .quote-block-text {
+    font-size: 16px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.8;
+    padding-left: 20px;
+    border-left: 1px solid rgba(139,115,85,0.25);
+  }
+  
+  .quote-block-text::before {
+    content: '§';
+    position: absolute;
+    left: 30px;
+    top: 35px;
+    font-size: 16px;
+    color: rgba(139,115,85,0.15);
+  }
+  
+  .layout-fullimage {
+    width: 100%;
+    height: 50vh;
+    min-height: 350px;
+    position: relative;
+    overflow: hidden;
+    margin: 40px 0;
+  }
+  
+  .layout-fullimage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .layout-fullimage-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(139,115,85,0.3) 0%, rgba(80,65,45,0.7) 100%);
+    z-index: 2;
+  }
+  
+  .layout-fullimage-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+    z-index: 10;
+  }
+  
+  .layout-fullimage-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 2px;
+  }
+  
+  .footer-section {
+    padding: 60px 30px;
+    text-align: center;
+    background: #F5F5F0;
+  }
+  
+  .footer-divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(0,0,0,0.15);
+    margin: 0 auto 30px;
+  }
+  
+  .footer-end {
+    font-size: 13px;
+    font-weight: 300;
+    color: #aaa;
+    letter-spacing: 6px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-logo {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #8B7355;
+    letter-spacing: 4px;
+  }
+  
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    z-index: 100;
+  }
+  
+  .bottom-nav-item {
+    font-size: 11px;
+    color: #999;
+    text-decoration: none;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  
+  .bottom-nav-item.active {
+    color: #8B7355;
+    font-weight: 500;
+  }
+  
+  @media (min-width: 700px) and (min-height: 1000px) {
+    .cover-title { font-size: 80px; }
+    .poster-toc-vertical { font-size: 80px; }
+    .layout-hero-title { font-size: 48px; }
+    .layout-split { min-height: 500px; }
+    .body-text { font-size: 18px; padding: 40px 60px; }
+  }
+  
+  @media (max-width: 400px) {
+    .cover-title { font-size: 42px; }
+    .poster-toc-vertical { font-size: 48px; }
+    .layout-hero-title { font-size: 26px; }
+    .layout-split { flex-direction: column; }
+    .layout-split-image { min-height: 280px; }
+    .body-text { font-size: 15px; padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 第1页：封面 -->
+<div class="cover-page" id="coverPage" onclick="enterMagazine()">
+  <div class="cover-bg"></div>
+  
+  <div class="cover-header-box">
+    <div class="cover-header-name">微光纪实</div>
+    <div class="cover-header-issue">2026年5月刊</div>
+  </div>
+  
+  <div class="cover-content">
+    <div class="cover-title">长文本之死</div>
+    <div class="cover-subtitle">不是不想读，是读不懂了</div>
+  </div>
+  
+  <div class="cover-hint">
+    <div class="cover-hint-text">点击进入</div>
+    <div class="cover-hint-arrow"></div>
+  </div>
+</div>
+
+<!-- 第2页：LOGO动画 -->
+<div class="logo-page" id="logoPage">
+  <div class="logo-glow"></div>
+  <div class="logo-horizon"></div>
+  <div class="logo-arrow-container">
+    <div class="logo-beam"></div>
+    <div class="logo-arrow">
+      <div class="logo-arrow-glow"></div>
+    </div>
+  </div>
+  <div class="logo-text">微光纪实</div>
+</div>
+
+<!-- 第3页：海报式目录（竖排大字+右侧文字块） -->
+<div class="toc-page" id="tocPage">
+  <div class="poster-toc">
+    <div class="poster-toc-vertical">长文本之死</div>
+    
+    <div class="poster-toc-side">
+      <div class="poster-toc-label">栏目 02 · HUMANITIES</div>
+      
+      <div class="poster-toc-summary">
+        当大脑被训练成只能处理140字，长文本的消亡就成了必然。这不是阅读习惯的改变，是认知结构的退化。
+      </div>
+      
+      <div class="poster-toc-keywords">
+        <span class="poster-toc-keyword">深度阅读</span>
+        <span class="poster-toc-keyword">碎片化</span>
+        <span class="poster-toc-keyword">认知退化</span>
+      </div>
+      
+      <div class="poster-toc-divider"></div>
+      
+      <div class="poster-toc-date">2026.05</div>
+      
+      <div class="poster-toc-enter" onclick="showArticle()">↓ 阅读全文</div>
+    </div>
+  </div>
+</div>
+
+<!-- 第4页：正文 -->
+<div class="content-page" id="contentPage">
+  
+  <!-- 开篇大图 -->
+  <div class="layout-hero">
+    <div class="layout-hero-bg"></div>
+    <div class="layout-hero-overlay"></div>
+    <div class="layout-hero-content">
+      <div class="layout-hero-label">栏目 02 · HUMANITIES</div>
+      <div class="layout-hero-title">长文本之死</div>
+      <div class="layout-hero-subtitle">不是不想读，是读不懂了</div>
+    </div>
+  </div>
+  
+  <!-- 人物故事开场 -->
+  <div class="body-text">
+    <strong>王磊今年32岁，出版社编辑。他的困惑是这样的：</strong>
+  </div>
+  
+  <div class="body-text">
+    他编辑的一本社会评论书，作者写了三年，改了八稿，全书12万字。首印5000册，三个月卖了不到800本。同期，一本"10分钟读懂XX"的图解书，首印3万册，一周售罄。王磊去问读者："为什么不愿意读长文本？"最常见的回答是："太长了，没时间。"但他知道，真相不是没时间，是"读不下去"。
+  </div>
+  
+  <!-- 配图：书店 -->
+  <div class="layout-image-text">
+    <div class="image-area">
+      <img src="https://images.pexels.com/photos/22391868/pexels-photo-22391868.jpeg?w=900" alt="书店">
+    </div>
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="text-area" style="background: #8B7355;">
+      <div class="text-area-title">"12万字，成了这个时代的外语。"</div>
+      <div class="text-area-body">
+        2026年世界读书日的数据：中国人年均阅读纸质书4.76本，但平均每本书的阅读完成率不到30%。更残酷的对比：短视频日均使用时长127分钟，电子书阅读时长23分钟。
+      </div>
+    </div>
+  </div>
+  
+  <!-- 金句图片 -->
+  <div class="layout-quote-image">
+    <img src="https://images.pexels.com/photos/13007028/pexels-photo-13007028.jpeg?w=900" alt="书本">
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="layout-quote-text-box">
+      <p>长文本的消亡，<br>是复杂思考能力的消亡。</p>
+    </div>
+  </div>
+  
+  <!-- 小标题卡片 -->
+  <div class="layout-card-title">
+    <div class="title-card">
+      <div class="title-card-main">一、从"阅读"到"筛选"</div>
+      <div class="title-card-sub">From Reading to Scanning</div>
+    </div>
+  </div>
+  
+  <!-- 正文 -->
+  <div class="body-text">
+    复旦大学文学教授做过一个实验：让学生读一篇5000字的短篇小说，超过一半中途放弃。理由五花八门："太啰嗦"、"节奏太慢"、"没有重点"。教授总结："他们不是在阅读，是在'筛选'。好像每句话都必须有'干货'，否则就是浪费时间。"
+  </div>
+  
+  <div class="body-text">
+    这种"筛选式阅读"是碎片化信息训练的产物。短视频、微博、公众号，都在培养同一种能力：快速提取"有用信息"，跳过"冗余内容"。但长文本的价值恰恰在于"冗余"——那些看似无关的描写、铺垫、氛围，构成了理解的深度。
+  </div>
+  
+  <!-- 配图：阅读场景 -->
+  <div class="layout-split">
+    <div class="layout-split-text">
+      <div class="layout-split-label">01 / 观察</div>
+      <div class="layout-split-title">当"太长"成为标准评价</div>
+      <div class="layout-split-body">
+        一位出版人说出了行业隐痛："我们出了一本口碑很好的社科书，首印8000册，退货率60%。不是书不好，是读者发现'太长了，读不下去'。""太长了"——这三个字，是2026年读者最常见的评价。
+      </div>
+    </div>
+    <div class="layout-split-image">
+      <img src="https://images.pexels.com/photos/29335871/pexels-photo-29335871.jpeg?w=600" alt="阅读">
+    </div>
+  </div>
+  <div class="image-caption">图 / Unsplash</div>
+  
+  <!-- 引用块 -->
+  <div class="quote-block">
+    <div class="quote-block-line"></div>
+    <div class="quote-block-text">
+      "深度阅读能力的丧失，不只是习惯问题，是认知结构的改变。当大脑被训练成只能接受'15秒'、'280字'、'一图读懂'的信息密度，长文本就变成了外语。不是不想读，是读不懂了。"
+    </div>
+  </div>
+  
+  <!-- 小标题卡片 -->
+  <div class="layout-card-title">
+    <div class="title-card">
+      <div class="title-card-main">二、复杂问题，从来不能用140字说清楚</div>
+      <div class="title-card-sub">The Complexity of Truth</div>
+    </div>
+  </div>
+  
+  <!-- 正文 -->
+  <div class="body-text">
+    这很可怕。因为复杂问题从来不能用140字说清楚。一个放弃长文本阅读的社会，也放弃了复杂思考的能力。当所有问题都被简化为"支持"或"反对"，当所有讨论都变成"站队"而非"理解"，公共理性的基础就被瓦解了。
+  </div>
+  
+  <div class="body-text">
+    王磊后来做了一个小实验：在社交媒体上发两条关于同一本书的内容。一条是3000字的书评，阅读量不到500。另一条是"三句话总结"，阅读量超过10万。但评论区暴露了一切：读长文的人能讨论书中的观点，读短文的只记住了"金句"。
+  </div>
+  
+  <!-- 配图：文字与屏幕 -->
+  <div class="layout-image-text">
+    <div class="image-area">
+      <img src="https://images.pexels.com/photos/36460462/pexels-photo-36460462.jpeg?w=900" alt="阅读">
+    </div>
+    <div class="image-caption">图 / Unsplash</div>
+    <div class="text-area" style="background: #8B7355;">
+      <div class="text-area-title">"金句是思考的替代品。"</div>
+      <div class="text-area-body">
+        当"金句"取代了论证，当"结论"取代了过程，我们得到的不是知识，是谈资。谈资不能解决问题，只能让你在社交场合显得"有见识"。
+      </div>
+    </div>
+  </div>
+  
+  <!-- 跨页大图 -->
+  <div class="layout-fullimage">
+    <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80" alt="书架">
+    <div class="layout-fullimage-overlay"></div>
+    <div class="layout-fullimage-bar">
+      <div class="layout-fullimage-text">长文本不死，只是凋零</div>
+    </div>
+  </div>
+  <div class="image-caption">图 / Unsplash</div>
+  
+  <!-- 尾标 -->
+  <div class="footer-section">
+    <div class="footer-divider"></div>
+    <div class="footer-end">— END —</div>
+    <div class="footer-logo">微光纪实</div>
+    <div class="footer-divider" style="margin-top:30px;"></div>
+  </div>
+  
+</div>
+
+<!-- 底部导航 -->
+<div class="bottom-nav">
+  <a href="封面故事.html" class="bottom-nav-item">封面</a>
+  <a href="教育.html" class="bottom-nav-item">教育</a>
+  <a href="人文.html" class="bottom-nav-item active">人文</a>
+  <a href="银发.html" class="bottom-nav-item">银发</a>
+  <a href="生活.html" class="bottom-nav-item">生活</a>
+</div>
+
+<script>
+  function enterMagazine() {
+    const cover = document.getElementById('coverPage');
+    const logo = document.getElementById('logoPage');
+    const toc = document.getElementById('tocPage');
+    
+    cover.style.transition = 'opacity 0.5s ease';
+    cover.style.opacity = '0';
+    
+    setTimeout(() => {
+      cover.style.display = 'none';
+      
+      logo.style.display = 'flex';
+      setTimeout(() => logo.classList.add('active'), 50);
+      
+      setTimeout(() => {
+        logo.style.transition = 'opacity 0.5s ease';
+        logo.style.opacity = '0';
+        
+        setTimeout(() => {
+          logo.style.display = 'none';
+          
+          toc.style.display = 'flex';
+          setTimeout(() => toc.classList.add('active'), 50);
+          
+          toc.scrollIntoView({ behavior: 'smooth' });
+        }, 500);
+      }, 3000);
+    }, 500);
+  }
+  
+  function showArticle() {
+    const toc = document.getElementById('tocPage');
+    const content = document.getElementById('contentPage');
+    
+    if (toc.style.pointerEvents === 'none') return;
+    toc.style.pointerEvents = 'none';
+    
+    toc.style.transition = 'opacity 0.5s ease';
+    toc.style.opacity = '0';
+    
+    setTimeout(() => {
+      toc.style.display = 'none';
+      
+      content.style.display = 'block';
+      content.style.opacity = '0';
+      content.style.transition = 'opacity 0.8s ease';
+      
+      setTimeout(() => {
+        content.style.opacity = '1';
+        window.scrollTo({ top: content.offsetTop, behavior: 'smooth' });
+      }, 50);
+    }, 500);
+  }
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('logoPage').style.display = 'none';
+    document.getElementById('tocPage').style.display = 'none';
+    document.getElementById('contentPage').style.display = 'none';
+  });
+</script>
+
+</body>
+</html>
