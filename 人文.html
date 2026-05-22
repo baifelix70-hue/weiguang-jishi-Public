@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -868,7 +868,7 @@
 </div>
 
 <!-- 第3页：海报式目录（竖排大字+右侧文字块） -->
-<div class="toc-page" id="tocPage">
+<div class="toc-page" id="tocPage" onclick="showArticle()">
   <div class="poster-toc">
     <div class="poster-toc-vertical">长文本之死</div>
     
@@ -889,7 +889,7 @@
       
       <div class="poster-toc-date">2026.05</div>
       
-      <div class="poster-toc-enter" onclick="showArticle()">↓ 阅读全文</div>
+      <div class="poster-toc-enter" onclick="showArticle()">↓ 点击进入正文</div>
     </div>
   </div>
 </div>
@@ -922,7 +922,7 @@
     <div class="image-area">
       <img src="https://images.pexels.com/photos/22391868/pexels-photo-22391868.jpeg?w=900" alt="书店">
     </div>
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="text-area" style="background: #8B7355;">
       <div class="text-area-title">"12万字，成了这个时代的外语。"</div>
       <div class="text-area-body">
@@ -934,7 +934,7 @@
   <!-- 金句图片 -->
   <div class="layout-quote-image">
     <img src="https://images.pexels.com/photos/13007028/pexels-photo-13007028.jpeg?w=900" alt="书本">
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="layout-quote-text-box">
       <p>长文本的消亡，<br>是复杂思考能力的消亡。</p>
     </div>
@@ -970,7 +970,7 @@
       <img src="https://images.pexels.com/photos/29335871/pexels-photo-29335871.jpeg?w=600" alt="阅读">
     </div>
   </div>
-  <div class="image-caption">图 / Unsplash</div>
+  
   
   <!-- 引用块 -->
   <div class="quote-block">
@@ -1002,7 +1002,7 @@
     <div class="image-area">
       <img src="https://images.pexels.com/photos/36460462/pexels-photo-36460462.jpeg?w=900" alt="阅读">
     </div>
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="text-area" style="background: #8B7355;">
       <div class="text-area-title">"金句是思考的替代品。"</div>
       <div class="text-area-body">
@@ -1019,9 +1019,14 @@
       <div class="layout-fullimage-text">长文本不死，只是凋零</div>
     </div>
   </div>
-  <div class="image-caption">图 / Unsplash</div>
   
-  <!-- 尾标 -->
+  
+  
+<!-- 返回目录 -->
+<div style="padding: 30px; text-align: center; margin-top: 40px;">
+  <a href="index.html?toc=1" style="display: inline-block; padding: 12px 40px; border: 1px solid #2C3E50; color: #2C3E50; font-size: 14px; letter-spacing: 3px; text-decoration: none;">← 返回目录</a>
+</div>
+<!-- 尾标 -->
   <div class="footer-section">
     <div class="footer-divider"></div>
     <div class="footer-end">— END —</div>

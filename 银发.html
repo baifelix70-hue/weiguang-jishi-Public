@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -885,7 +885,7 @@
 </div>
 
 <!-- 第3页：海报式目录（横排大字+底部信息条） -->
-<div class="toc-page" id="tocPage">
+<div class="toc-page" id="tocPage" onclick="showArticle()">
   <div class="poster-toc">
     <div class="poster-toc-label">栏目 03 · SILVER HAIR</div>
     
@@ -909,7 +909,7 @@
       <div class="poster-toc-info-right">微光纪实</div>
     </div>
     
-    <div class="poster-toc-enter" onclick="showArticle()">↓ 阅读全文</div>
+    <div class="poster-toc-enter" onclick="showArticle()">↓ 点击进入正文</div>
   </div>
 </div>
 
@@ -941,7 +941,7 @@
     <div class="image-area">
       <img src="https://images.pexels.com/photos/19204421/pexels-photo-19204421.jpeg?w=900" alt="老人做手工">
     </div>
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="text-area" style="background: #9B8470;">
       <div class="text-area-title">"这双手，纳过几代人的鞋底。"</div>
       <div class="text-area-body">
@@ -953,7 +953,7 @@
   <!-- 金句图片 -->
   <div class="layout-quote-image">
     <img src="https://images.pexels.com/photos/34674800/pexels-photo-34674800.jpeg?w=900" alt="老人">
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="layout-quote-text-box">
       <p>手艺的消失，<br>是记忆的消失。</p>
     </div>
@@ -989,7 +989,7 @@
       <img src="https://images.pexels.com/photos/30597117/pexels-photo-30597117.jpeg?w=600" alt="老街">
     </div>
   </div>
-  <div class="image-caption">图 / Unsplash</div>
+  
   
   <!-- 引用块 -->
   <div class="quote-block">
@@ -1021,7 +1021,7 @@
     <div class="image-area">
       <img src="https://images.pexels.com/photos/19821638/pexels-photo-19821638.jpeg?w=900" alt="老人">
     </div>
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="text-area" style="background: #9B8470;">
       <div class="text-area-title">"我想教，但没人学。"</div>
       <div class="text-area-body">
@@ -1038,9 +1038,14 @@
       <div class="layout-fullimage-text">慢下来的时光，是这个时代最奢侈的遗产</div>
     </div>
   </div>
-  <div class="image-caption">图 / Unsplash</div>
   
-  <!-- 尾标 -->
+  
+  
+<!-- 返回目录 -->
+<div style="padding: 30px; text-align: center; margin-top: 40px;">
+  <a href="index.html?toc=1" style="display: inline-block; padding: 12px 40px; border: 1px solid #2C3E50; color: #2C3E50; font-size: 14px; letter-spacing: 3px; text-decoration: none;">← 返回目录</a>
+</div>
+<!-- 尾标 -->
   <div class="footer-section">
     <div class="footer-divider"></div>
     <div class="footer-end">— END —</div>

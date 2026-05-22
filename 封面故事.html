@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -910,7 +910,7 @@
 </div>
 
 <!-- 第3页：全期总目录 -->
-<div class="toc-page" id="tocPage">
+<div class="toc-page" id="tocPage" onclick="showArticle()">
   <div class="full-toc">
     <div class="full-toc-header">
       <div class="full-toc-magazine">微光纪实</div>
@@ -968,7 +968,7 @@
     
     <div class="full-toc-bottom">
       <div class="full-toc-bottom-divider"></div>
-      <div class="full-toc-enter" onclick="showArticle()">↓ 阅读全文</div>
+      <div class="full-toc-enter" onclick="showArticle()">↓ 点击进入正文</div>
     </div>
   </div>
 </div>
@@ -1001,7 +1001,7 @@
     <div class="image-area">
       <img src="https://images.pexels.com/photos/6538431/pexels-photo-6538431.jpeg?w=900" alt="城市街景">
     </div>
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="text-area" style="background: #2C3E50;">
       <div class="text-area-title">"这不是身体累。这是大脑在罢工。"</div>
       <div class="text-area-body">
@@ -1013,7 +1013,7 @@
   <!-- 金句图片 -->
   <div class="layout-quote-image">
     <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?w=900&q=80&blur=2" alt="城市夜景">
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="layout-quote-text-box">
       <p>我们用深度专注，交换了碎片化刺激。<br>
       用长文本阅读能力，交换了算法推送的即时满足。<br>
@@ -1051,7 +1051,7 @@
       <img src="https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?w=600&q=80" alt="书店里的读者">
     </div>
   </div>
-  <div class="image-caption">图 / Unsplash</div>
+  
   
   <!-- 引用块 -->
   <div class="quote-block">
@@ -1083,7 +1083,7 @@
     <div class="image-area">
       <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?w=900&q=80" alt="深夜的窗户">
     </div>
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="text-area" style="background: #2C3E50;">
       <div class="text-area-title">"原来发呆也是一种能力。"</div>
       <div class="text-area-body">
@@ -1095,7 +1095,7 @@
   <!-- 金句图片 -->
   <div class="layout-quote-image">
     <img src="https://images.pexels.com/photos/33561313/pexels-photo-33561313.jpeg?w=900" alt="独处">
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="layout-quote-text-box">
       <p>独处能力的丧失，<br>本质上是对"自己"的恐惧。</p>
     </div>
@@ -1131,7 +1131,7 @@
       </div>
     </div>
   </div>
-  <div class="image-caption">图 / Unsplash</div>
+  
   
   <div class="body-text">
     <strong>深度阅读能力的丧失，不只是习惯问题，是认知结构的改变。</strong>当大脑被训练成只能接受"15秒"、"280字"、"一图读懂"的信息密度，长文本就变成了外语。不是不想读，是读不懂了。这很可怕。因为复杂问题从来不能用140字说清楚。一个放弃长文本阅读的社会，也放弃了复杂思考的能力。
@@ -1145,7 +1145,7 @@
       <div class="layout-fullimage-text">慢下来，是这个时代最危险的举动</div>
     </div>
   </div>
-  <div class="image-caption">图 / Unsplash</div>
+  
   
   <!-- 故事回到李然 -->
   <div class="body-text" style="padding-top: 40px;">
@@ -1161,7 +1161,7 @@
     <div class="image-area">
       <img src="https://images.pexels.com/photos/1690843/pexels-photo-1690843.jpeg?w=900" alt="台灯">
     </div>
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="text-area" style="background: #2C3E50;">
       <div class="text-area-title">"原来发呆也是一种能力。"</div>
       <div class="text-area-body">
@@ -1173,7 +1173,7 @@
   <!-- 日出配图 -->
   <div class="layout-quote-image">
     <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&q=80" alt="日出">
-    <div class="image-caption">图 / Unsplash</div>
+    
   </div>
   
   <!-- 错位文字 -->
@@ -1188,13 +1188,18 @@
   <!-- 结尾金句图片 -->
   <div class="layout-quote-image">
     <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=900&q=80&blur=2" alt="城市夜景">
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="layout-quote-text-box">
       <p>退化不是终点，<br>觉醒才是开始。</p>
     </div>
   </div>
   
-  <!-- 尾标 -->
+  
+<!-- 返回目录 -->
+<div style="padding: 30px; text-align: center; margin-top: 40px;">
+  <a href="index.html?toc=1" style="display: inline-block; padding: 12px 40px; border: 1px solid #2C3E50; color: #2C3E50; font-size: 14px; letter-spacing: 3px; text-decoration: none;">← 返回目录</a>
+</div>
+<!-- 尾标 -->
   <div class="footer-section">
     <div class="footer-divider"></div>
     <div class="footer-end">— END —</div>

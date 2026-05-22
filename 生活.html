@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -906,7 +906,7 @@
 </div>
 
 <!-- 第3页：极简竖排目录 -->
-<div class="toc-page" id="tocPage">
+<div class="toc-page" id="tocPage" onclick="showArticle()">
   <div class="minimal-toc">
     <!-- 左侧竖排大字 -->
     <div class="minimal-toc-main">
@@ -933,7 +933,7 @@
     </div>
   </div>
   
-  <div class="minimal-toc-enter" onclick="showArticle()">↓ 阅读全文</div>
+  <div class="minimal-toc-enter" onclick="showArticle()">↓ 点击进入正文</div>
 </div>
 
 <!-- 第4页：正文 -->
@@ -964,7 +964,7 @@
     <div class="image-area">
       <img src="https://images.pexels.com/photos/34622244/pexels-photo-34622244.jpeg?w=900" alt="专注">
     </div>
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="text-area" style="background: #5D7A68;">
       <div class="text-area-title">"原来我可以不被手机控制。"</div>
       <div class="text-area-body">
@@ -976,7 +976,7 @@
   <!-- 金句图片 -->
   <div class="layout-quote-image">
     <img src="https://images.pexels.com/photos/37247980/pexels-photo-37247980.jpeg?w=900" alt="自然">
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="layout-quote-text-box">
       <p>抵抗的意义，<br>不在于胜利，而在于选择。</p>
     </div>
@@ -1012,7 +1012,7 @@
       <img src="https://images.pexels.com/photos/33821804/pexels-photo-33821804.jpeg?w=600" alt="自然">
     </div>
   </div>
-  <div class="image-caption">图 / Unsplash</div>
+  
   
   <!-- 引用块 -->
   <div class="quote-block">
@@ -1044,7 +1044,7 @@
     <div class="image-area">
       <img src="https://images.pexels.com/photos/9752058/pexels-photo-9752058.jpeg?w=900" alt="安静">
     </div>
-    <div class="image-caption">图 / Unsplash</div>
+    
     <div class="text-area" style="background: #5D7A68;">
       <div class="text-area-title">"抵抗，是为了保留选择的权利。"</div>
       <div class="text-area-body">
@@ -1061,9 +1061,14 @@
       <div class="layout-fullimage-text">夺回注意力，就是夺回生活的主动权</div>
     </div>
   </div>
-  <div class="image-caption">图 / Unsplash</div>
   
-  <!-- 尾标 -->
+  
+  
+<!-- 返回目录 -->
+<div style="padding: 30px; text-align: center; margin-top: 40px;">
+  <a href="index.html?toc=1" style="display: inline-block; padding: 12px 40px; border: 1px solid #2C3E50; color: #2C3E50; font-size: 14px; letter-spacing: 3px; text-decoration: none;">← 返回目录</a>
+</div>
+<!-- 尾标 -->
   <div class="footer-section">
     <div class="footer-divider"></div>
     <div class="footer-end">— END —</div>

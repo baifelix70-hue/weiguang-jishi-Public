@@ -124,6 +124,13 @@ function openToc() {
   document.querySelector('.cover').style.display = 'none';
   document.getElementById('tocPage').style.display = 'block';
 }
+// ?toc=1 → skip cover, show TOC directly
+(function() {
+  var p = new URLSearchParams(window.location.search);
+  if (p.get('toc') === '1') {
+    openToc();
+  }
+})();
 </script>
 </body>
 </html>
