@@ -909,64 +909,6 @@
   <div class="logo-text">微光纪实</div>
 </div>
 
-
-    
-    <div class="full-toc-divider"></div>
-    
-    <ul class="full-toc-list">
-      <li class="full-toc-item">
-        <span class="full-toc-num">01</span>
-        <div class="full-toc-item-content">
-          <div class="full-toc-category cat-cover">封面故事 · COVER STORY</div>
-          <div class="full-toc-article-title">能力的退化</div>
-          <div class="full-toc-article-sub">我们不是在退化，是在主动投降</div>
-        </div>
-      </li>
-      
-      <li class="full-toc-item">
-        <span class="full-toc-num">02</span>
-        <div class="full-toc-item-content">
-          <div class="full-toc-category cat-edu">教育 · EDUCATION</div>
-          <div class="full-toc-article-title">孩子的专注力，是被父母亲手拆掉的</div>
-          <div class="full-toc-article-sub">一个焦虑母亲的教育实验，揭开了当代育儿最大的悖论</div>
-        </div>
-      </li>
-      
-      <li class="full-toc-item">
-        <span class="full-toc-num">03</span>
-        <div class="full-toc-item-content">
-          <div class="full-toc-category cat-human">人文 · HUMANITIES</div>
-          <div class="full-toc-article-title">长文本之死</div>
-          <div class="full-toc-article-sub">不是不想读，是读不懂了</div>
-        </div>
-      </li>
-      
-      <li class="full-toc-item">
-        <span class="full-toc-num">04</span>
-        <div class="full-toc-item-content">
-          <div class="full-toc-category cat-silver">银发一族 · SILVER HAIR</div>
-          <div class="full-toc-article-title">72岁的老手艺与被时代甩开的人</div>
-          <div class="full-toc-article-sub">沈阳老妈的针线活，缝补着一个时代的记忆</div>
-        </div>
-      </li>
-      
-      <li class="full-toc-item">
-        <span class="full-toc-num">05</span>
-        <div class="full-toc-item-content">
-          <div class="full-toc-category cat-life">生活 · LIFE</div>
-          <div class="full-toc-article-title">夺回注意力</div>
-          <div class="full-toc-article-sub">一场注定失败的抵抗，但还是要抵抗</div>
-        </div>
-      </li>
-    </ul>
-    
-    <div class="full-toc-bottom">
-      <div class="full-toc-bottom-divider"></div>
-      <div class="full-toc-enter" onclick="showArticle()">↓ 点击进入正文</div>
-    </div>
-  </div>
-</div>
-
 <!-- 第4页：正文 -->
 <div class="content-page" id="contentPage">
   
@@ -1213,66 +1155,36 @@
 </div>
 
 <script>
-  // 进入杂志：封面点击 → LOGO动画 → 黑屏 → 目录
+  // 进入杂志：封面点击 → LOGO动画 → 直接正文
   function enterMagazine() {
-    const cover = document.getElementById('coverPage');
-    const logo = document.getElementById('logoPage');
-    const toc = document.getElementById('tocPage');
-    
+    var cover = document.getElementById('coverPage');
+    var logo = document.getElementById('logoPage');
+    var content = document.getElementById('contentPage');
     cover.style.transition = 'opacity 0.5s ease';
     cover.style.opacity = '0';
-    
-    setTimeout(() => {
+    setTimeout(function() {
       cover.style.display = 'none';
-      
       logo.style.display = 'flex';
-      setTimeout(() => logo.classList.add('active'), 50);
-      
-      setTimeout(() => {
+      setTimeout(function() { logo.classList.add('active'); }, 50);
+      setTimeout(function() {
         logo.style.transition = 'opacity 0.5s ease';
         logo.style.opacity = '0';
-        
-        setTimeout(() => {
+        setTimeout(function() {
           logo.style.display = 'none';
-          
-          toc.style.display = 'flex';
-          setTimeout(() => toc.classList.add('active'), 50);
-          
-          toc.scrollIntoView({ behavior: 'smooth' });
+          content.style.display = 'block';
+          content.style.opacity = '0';
+          content.style.transition = 'opacity 0.8s ease';
+          setTimeout(function() {
+            content.style.opacity = '1';
+            window.scrollTo({ top: content.offsetTop, behavior: 'smooth' });
+          }, 50);
         }, 500);
       }, 3000);
     }, 500);
   }
-  
-  // 点击目录进入文章
-  function showArticle() {
-    const toc = document.getElementById('tocPage');
-    const content = document.getElementById('contentPage');
-    
-    if (toc.style.pointerEvents === 'none') return;
-    toc.style.pointerEvents = 'none';
-    
-    toc.style.transition = 'opacity 0.5s ease';
-    toc.style.opacity = '0';
-    
-    setTimeout(() => {
-      toc.style.display = 'none';
-      
-      content.style.display = 'block';
-      content.style.opacity = '0';
-      content.style.transition = 'opacity 0.8s ease';
-      
-      setTimeout(() => {
-        content.style.opacity = '1';
-        window.scrollTo({ top: content.offsetTop, behavior: 'smooth' });
-      }, 50);
-    }, 500);
-  }
-  
-  // 初始化
-  document.addEventListener('DOMContentLoaded', () => {
+
+  document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('logoPage').style.display = 'none';
-    document.getElementById('tocPage').style.display = 'none';
     document.getElementById('contentPage').style.display = 'none';
   });
 </script>
